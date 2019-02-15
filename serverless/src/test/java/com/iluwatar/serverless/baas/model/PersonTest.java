@@ -60,6 +60,8 @@ public class PersonTest {
       }
     }
     DecimalFormat df = new DecimalFormat("#.###");
-    System.out.println("Covered " + df.format(coveredConds / Person.totalCoverage.length) + "% of all conditions");
+    System.out.println("Covered " + df.format(((coveredConds + 1) / Person.totalCoverage.length) * 100)
+        + "% of all conditions");
+
   }
 }
