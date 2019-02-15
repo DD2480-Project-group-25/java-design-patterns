@@ -29,6 +29,35 @@ import java.io.Serializable;
  */
 public class LambdaInfo implements Serializable {
 
+  public static boolean[] coverage = new boolean[37];
+  public static boolean[] totalCoverage = new boolean[37];
+  public static final String[] CONDS = {"this == o", "this != o", "o == null",
+      "o != null", "getClass() != o.getClass()",
+      "o != null && getClass() == o.getClass()", "awsRequestId != null",
+      "!awsRequestId.equals(that.awsRequestId)",
+      "awsRequestId.equals(that.awsRequestId)", "that.awsRequestId != null",
+      "awsRequestId == null && that.awsRequestId == null",
+      "logGroupName != null", "!logGroupName.equals(that.logGroupName)",
+      "logGroupName.equals(that.logGroupName)", "that.logGroupName != null",
+      "logGroupName == null && that.logGroupName == null",
+      "logStreamName != null", "!logStreamName.equals(that.logStreamName)",
+      "logStreamName.equals(that.logStreamName)",
+      "that.logStreamName != null",
+      "logStreamName == null && that.logStreamName == null",
+      "functionName != null", "!functionName.equals(that.functionName)",
+      "functionName.equals(that.functionName)", "that.functionName != null",
+      "functionName == null && that.functionName == null",
+      "functionVersion != null",
+      "!functionVersion.equals(that.functionVersion)",
+      "functionVersion.equals(that.functionVersion)",
+      "that.functionVersion != null",
+      "functionVersion == null && that.functionVersion == null",
+      "memoryLimitInMb != null",
+      "memoryLimitInMb.equals(that.memoryLimitInMb)",
+      "!memoryLimitInMb.equals(that.memoryLimitInMb)",
+      "that.memoryLimitInMb == null",
+      "memoryLimitInMb == null && "
+          + "that.memoryLimitInMb != null", "default"};
   private static final long serialVersionUID = 3936130599040848923L;
 
   private String awsRequestId;
@@ -100,31 +129,118 @@ public class LambdaInfo implements Serializable {
 
   @Override
   public boolean equals(Object o) {
+    coverage[36] = true;
     if (this == o) {
+      coverage[0] = true;
       return true;
+    } else {
+      coverage[1] = true;
     }
     if (o == null || getClass() != o.getClass()) {
+      if (o == null) {
+        coverage[2] = true;
+      } else {
+        coverage[3] = true;
+        coverage[4] = true;
+      }
       return false;
+    } else {
+      coverage[5] = true;
     }
 
     LambdaInfo that = (LambdaInfo) o;
 
-    if (awsRequestId != null ? !awsRequestId.equals(that.awsRequestId) : that.awsRequestId != null) {
+    if (awsRequestId != null) {
+      coverage[6] = true;
+      if (!awsRequestId.equals(that.awsRequestId)) {
+        coverage[7] = true;
+        return false;
+      } else {
+        coverage[8] = true;
+      }
+    } else if (that.awsRequestId != null) {
+      coverage[9] = true;
       return false;
+    } else {
+      coverage[10] = true;
     }
-    if (logGroupName != null ? !logGroupName.equals(that.logGroupName) : that.logGroupName != null) {
+
+    if (logGroupName != null) {
+      coverage[11] = true;
+      if (!logGroupName.equals(that.logGroupName)) {
+        coverage[12] = true;
+        return false;
+      } else {
+        coverage[13] = true;
+      }
+    } else if (that.logGroupName != null) {
+      coverage[14] = true;
       return false;
+    } else {
+      coverage[15] = true;
     }
-    if (logStreamName != null ? !logStreamName.equals(that.logStreamName) : that.logStreamName != null) {
+
+    if (logStreamName != null) {
+      coverage[16] = true;
+      if (!logStreamName.equals(that.logStreamName)) {
+        coverage[17] = true;
+        return false;
+      } else {
+        coverage[18] = true;
+      }
+    } else if (that.logStreamName != null) {
+      coverage[19] = true;
       return false;
+    } else {
+      coverage[20] = true;
     }
-    if (functionName != null ? !functionName.equals(that.functionName) : that.functionName != null) {
+
+    if (functionName != null) {
+      coverage[21] = true;
+      if (!functionName.equals(that.functionName)) {
+        coverage[22] = true;
+        return false;
+      } else {
+        coverage[23] = true;
+      }
+    } else if (that.functionName != null) {
+      coverage[24] = true;
       return false;
+    } else {
+      coverage[25] = true;
     }
-    if (functionVersion != null ? !functionVersion.equals(that.functionVersion) : that.functionVersion != null) {
+
+    if (functionVersion != null) {
+      coverage[26] = true;
+      if (!functionVersion.equals(that.functionVersion)) {
+        coverage[27] = true;
+        return false;
+      } else {
+        coverage[28] = true;
+      }
+    } else if (that.functionVersion != null) {
+      coverage[29] = true;
       return false;
+    } else {
+      coverage[30] = true;
     }
-    return memoryLimitInMb != null ? memoryLimitInMb.equals(that.memoryLimitInMb) : that.memoryLimitInMb == null;
+
+    if (memoryLimitInMb != null) {
+      coverage[31] = true;
+      if (memoryLimitInMb.equals(that.memoryLimitInMb)) {
+        coverage[32] = true;
+        return true;
+      } else {
+        coverage[33] = true;
+        return false;
+      }
+    } else if (that.memoryLimitInMb == null) {
+      coverage[34] = true;
+      return true;
+    } else {
+      coverage[35] = true;
+    }
+    return false;
   }
 
   @Override
