@@ -22,11 +22,15 @@
  */
 package com.iluwatar.builder;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.text.DecimalFormat;
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Date: 12/6/15 - 11:01 PM
@@ -35,6 +39,60 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public class HeroTest {
 
+  @BeforeAll
+  public static void setupCoverage() {
+    Hero.coverage = new boolean[13];
+    Hero.totalCoverage = new boolean[13];
+  }
+
+  /**
+   * Print coverage and empty array
+   */
+  @AfterEach
+  public void printAndCleanCoverage() {
+    // If default is false, method has not been run, don't print
+    if (Hero.coverage[12] == false) {
+      return;
+    }
+
+    System.out.print("[");
+    for (int i = 0; i < Hero.coverage.length; i++) {
+      if (Hero.coverage[i] || Hero.totalCoverage[i]) {
+        Hero.totalCoverage[i] = true;
+      }
+      if (i < Hero.coverage.length - 2) {
+        System.out.print(Hero.CONDS[i] + " is " + Hero.coverage[i] + ", ");
+      } else if (i == Hero.coverage.length - 1) {
+        System.out.print(Hero.CONDS[i] + " is " + Hero.coverage[i]);
+      }
+      Hero.coverage[i] = false;
+    }
+    System.out.println("]");
+    Arrays.fill(Hero.coverage, false);
+  }
+
+  /**
+   * Print total coverage
+   */
+  @AfterAll
+  public static void printCoverage() {
+    System.out.println();
+    System.out.println("Total coverage:");
+    double coveredConds = 0;
+    for (int i = 0; i < Hero.totalCoverage.length - 1; i++) {
+      if (Hero.totalCoverage[i]) {
+        System.out.println(Hero.CONDS[i] + " has been covered");
+        coveredConds++;
+      } else {
+        System.out.println(Hero.CONDS[i] + " has not been covered");
+      }
+    }
+    DecimalFormat df = new DecimalFormat("#.###");
+    System.out.println("Covered " + df.format(coveredConds/Hero.totalCoverage.length)
+        + "% of all conditions");
+    System.out.println();
+
+  }
   /**
    * Test if we get the expected exception when trying to create a hero without a profession
    */
@@ -75,5 +133,4 @@ public class HeroTest {
     assertEquals(HairColor.BLOND, hero.getHairColor());
 
   }
-
 }
