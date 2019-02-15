@@ -36,6 +36,13 @@ import java.io.Serializable;
  */
 @DynamoDBTable(tableName = "persons")
 public class Person implements Serializable {
+  public static boolean[] coverage;
+  public static boolean[] totalCoverage;
+  public static final String[] EQUALS_CONDS = {"this == o",
+      "o == null", "getClass() != o.getClass()",
+      "firstName != null && !firstName.equals(person.firstName)",
+      "firstName == null && person.firstName != null", "lastName != null && !lastName.equals(person.lastName)",
+      "lastName == null && person.lastName != null", "address != null", "default"};
 
   private static final long serialVersionUID = -3413087924608627075L;
 
@@ -84,23 +91,47 @@ public class Person implements Serializable {
 
   @Override
   public boolean equals(Object o) {
+    coverage[8] = true; //Default
     if (this == o) {
+      coverage[0] = true;
       return true;
     }
     if (o == null || getClass() != o.getClass()) {
-      return false;
+      if (o == null) {
+        coverage[1] = true;
+        return false;
+      }
+      if (getClass() != o.getClass()) {
+        coverage[2] = true;
+        return false;
+      }
     }
 
     Person person = (Person) o;
 
     if (firstName != null ? !firstName.equals(person.firstName) : person.firstName != null) {
+      if (firstName != null && !firstName.equals(person.firstName)) {
+        coverage[3] = true;
+      }
+      if (firstName == null && person.firstName != null) {
+        coverage[4] = true;
+      }
       return false;
     }
 
     if (lastName != null ? !lastName.equals(person.lastName) : person.lastName != null) {
+      if (lastName != null && !lastName.equals(person.lastName)) {
+        coverage[5] = true;
+      }
+      if (lastName == null && person.lastName != null) {
+        coverage[6] = true;
+      }
       return false;
     }
 
+    if (address != null) {
+      coverage[7] = true;
+    }
     return address != null ? address.equals(person.address) : person.address == null;
   }
 
