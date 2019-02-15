@@ -87,8 +87,9 @@ public class HeroTest {
         System.out.println(Hero.CONDS[i] + " has not been covered");
       }
     }
-    DecimalFormat df = new DecimalFormat("#.###");
-    System.out.println("Covered " + df.format(coveredConds/Hero.totalCoverage.length)
+    DecimalFormat df = new DecimalFormat("###.#");
+    System.out.println("Covered " +
+        df.format(((coveredConds + 1)/Hero.totalCoverage.length)*100)
         + "% of all conditions");
     System.out.println();
 
