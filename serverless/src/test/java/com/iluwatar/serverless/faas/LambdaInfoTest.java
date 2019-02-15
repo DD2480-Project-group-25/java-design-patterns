@@ -1,9 +1,9 @@
-package com.iluwatar.serverless.faas.api;
+package com.iluwatar.serverless.faas;
 
-import com.iluwatar.serverless.faas.LambdaInfo;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test class for LambdaInfo, currently only testing equals()-method
