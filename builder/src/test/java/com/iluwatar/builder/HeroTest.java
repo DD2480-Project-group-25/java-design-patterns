@@ -60,7 +60,7 @@ public class HeroTest {
       if (Hero.coverage[i] || Hero.totalCoverage[i]) {
         Hero.totalCoverage[i] = true;
       }
-      if (i < Hero.coverage.length - 2) {
+      if (i < Hero.coverage.length - 1) {
         System.out.print(Hero.CONDS[i] + " is " + Hero.coverage[i] + ", ");
       } else if (i == Hero.coverage.length - 1) {
         System.out.print(Hero.CONDS[i] + " is " + Hero.coverage[i]);
