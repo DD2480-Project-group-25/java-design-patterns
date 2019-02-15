@@ -4,7 +4,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 /**
- * Created by alzahraasalman on 2019-02-15.
+ * Test class containing tests to increase the coverage
+ * of Person.equals method.
  */
 public class PersonTest {
   /**
@@ -91,6 +92,52 @@ public class PersonTest {
     p.setLastName(null);
     Person o = newPerson();
     Assert.assertFalse(p.equals(o));
+  }
+
+  /**
+   * Positive test for equal() when address is null.
+   */
+  @Test
+  public void testAddressNullPositive() {
+    Person p = new Person();
+    p.setAddress(null);
+    Person person = new Person();
+    person.setAddress(null);
+    Assert.assertEquals(null, person.getAddress());
+    Assert.assertTrue(p.equals(person));
+  }
+
+  /**
+   * Negative test for equal() address is null but person.address is not.
+   */
+  @Test
+  public void testAddressNullNegative() {
+    Person p = new Person();
+    p.setAddress(null);
+    Person person = new Person();
+    Address a2 = new Address();
+    a2.setAddressLineOne("1 Odin ln");
+    a2.setCity("Asgard");
+    a2.setState("country of the Gods");
+    a2.setZipCode("00001");
+    person.setAddress(a2);
+    Assert.assertFalse(p.equals(person));
+  }
+
+  /**
+   * Negative test for equal() when address is not null.
+   */
+  @Test
+  public void testAddressNegative() {
+    Person p = newPerson();
+    Person person = new Person();
+    Address a = new Address();
+    a.setAddressLineOne("1 Odin");
+    a.setCity("Asgar");
+    a.setState("country");
+    a.setZipCode("0000");
+    person.setAddress(a);
+    Assert.assertFalse(p.equals(person));
   }
 
   private Person newPerson() {
