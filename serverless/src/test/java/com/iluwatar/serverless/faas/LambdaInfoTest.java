@@ -201,6 +201,18 @@ public class LambdaInfoTest {
   }
 
   /**
+   * Compare two LambdaInfo objects that are equal
+   */
+  @Test
+  public void testEqualsTrue() {
+    LambdaInfo info1 = createLambdaInfo(null, null, null,
+        null, null,1);
+    LambdaInfo info2 = createLambdaInfo(null, null, null,
+        null, null,1);
+    assertTrue(info1.equals(info2));
+  }
+
+  /**
    * Create LambdaInfo object for testing
    * @param id an awsRequestId
    * @param memory the memory limit in mb
