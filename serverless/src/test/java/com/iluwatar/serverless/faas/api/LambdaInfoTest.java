@@ -3,7 +3,7 @@ package com.iluwatar.serverless.faas.api;
 import com.iluwatar.serverless.faas.LambdaInfo;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test class for LambdaInfo, currently only testing equals()-method
@@ -18,7 +18,7 @@ public class LambdaInfoTest {
   @Test
   public void testEqualsSameObject() {
     LambdaInfo info1 = createLambdaInfo("1", 1);
-    assertEquals(info1.equals(info1), true);
+    assertTrue(info1.equals(info1));
   }
 
   /**
@@ -28,7 +28,7 @@ public class LambdaInfoTest {
   public void testEqualsNullObject() {
     LambdaInfo info1 = createLambdaInfo("1", 1);
     LambdaInfo info2 = null;
-    assertEquals(info1.equals(info2), false);
+    assertFalse(info1.equals(info2));
   }
 
   /**
@@ -38,7 +38,7 @@ public class LambdaInfoTest {
   public void testEqualsDifferentClass() {
     LambdaInfo info1 = createLambdaInfo("1",1);
     String info2 = "test";
-    assertEquals(info1.equals(info2), false);
+    assertFalse(info1.equals(info2));
   }
 
   /**
@@ -48,7 +48,7 @@ public class LambdaInfoTest {
   public void testEqualsDifferentRequestId() {
     LambdaInfo info1 = createLambdaInfo("1", 1);
     LambdaInfo info2 = createLambdaInfo("2", 1);
-    assertEquals(info1.equals(info2), false);
+    assertFalse(info1.equals(info2));
   }
 
   /**
@@ -58,7 +58,7 @@ public class LambdaInfoTest {
   public void testEqualsThisNullRequestId() {
     LambdaInfo info1 = createLambdaInfo(null, 1);
     LambdaInfo info2 = createLambdaInfo("1", 1);
-    assertEquals(info1.equals(info2), false);
+    assertFalse(info1.equals(info2));
   }
 
   /**
@@ -68,7 +68,7 @@ public class LambdaInfoTest {
   public void testEqualsOtherNullRequestId() {
     LambdaInfo info1 = createLambdaInfo(null, 1);
     LambdaInfo info2 = createLambdaInfo(null, 1);
-    assertEquals(info1.equals(info2), true);
+    assertTrue(info1.equals(info2));
   }
   /**
    * Compare two LambdaInfo objects with different memoryLimit
@@ -77,7 +77,7 @@ public class LambdaInfoTest {
   public void testEqualsDifferentMemoryLimit() {
     LambdaInfo info1 = createLambdaInfo("1", 1);
     LambdaInfo info2 = createLambdaInfo("1", 2);
-    assertEquals(info1.equals(info2), false);
+    assertFalse(info1.equals(info2));
   }
 
   /**
