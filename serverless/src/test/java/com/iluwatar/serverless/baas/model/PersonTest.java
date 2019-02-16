@@ -23,7 +23,7 @@ public class PersonTest {
   @AfterEach
   public void printAndCleanCoverage() {
     // Method did not run if default is false
-    if (!Person.coverage[9]) {
+    if (!Person.coverage[8]) {
       System.out.println("The method did not run");
       return;
     }
