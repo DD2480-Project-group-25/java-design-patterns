@@ -16,14 +16,42 @@
  */
 package com.iluwatar.event.asynchronous;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.*;
 
 /**
  * Tests that EventAsynchronous example runs without errors.
  */
+@RunWith(PowerMockRunner.class)
 public class AppTest {
+
+
+  @Test
+  public void firsTest() throws IOException {
+    mockStatic(LoggerFactory.class);
+    Logger logger = mock(Logger.class);
+    when(LoggerFactory.getLogger(any(Class.class))).thenReturn(logger);
+
+    String input = "1";
+    InputStream in = new ByteArrayInputStream(input.getBytes());
+    System.setIn(in);
+
+    new App().runInteractiveMode();
+    verify(logger).info("Boil multiple eggs at once (A) or boil them one-by-one (S)?: ");
+
+  }
+
   @Test
   public void test() throws IOException {
     String[] args = {};
