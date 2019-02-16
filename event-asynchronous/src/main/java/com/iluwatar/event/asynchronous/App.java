@@ -230,7 +230,7 @@ public class App {
         eventManager.shutdown();
       }
     }
-    coverage[13] = true; //defualt
+    coverage[13] = true; //default
     s.close();
   }
 
