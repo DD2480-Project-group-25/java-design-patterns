@@ -6,6 +6,14 @@ import org.junit.jupiter.api.Test;
 /**
  * Test class containing tests to increase the coverage
  * of Person.equals method.
+ *
+ * Previously tested requirements of Person.equals() (Coverage 0%) : None.
+ * Previously untested but now tested requirements of Person.equals() (Coverage 100%):
+ * - Compares identity
+ * - If the input object is Null
+ * - If the input object is not of class Person
+ * - Compares firstName, lastName and address (both positive and negative tests)
+ * - If firstName, lastName or address is Null
  */
 public class PersonTest {
   /**
