@@ -31,6 +31,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Date: 12/6/15 - 11:01 PM
  *
+ * Previously tested requirements of Hero.equals() (Coverage 86%) :
+ * - Hero has armor, weapon, hair type and hair color
+ * - Hero has no armor
+ * - In external tests existing hairType and hairType == BALD has been tested
+ * Previously untested but now tested requirements of Hero.equals() (Coverage 100%):
+ * - Hero has no hair type or hair color
+ * - Hero has no weapon
+ *
  * @author Jeroen Meulemeester
  */
 public class HeroTest {
@@ -73,7 +81,38 @@ public class HeroTest {
     assertEquals(Weapon.SWORD, hero.getWeapon());
     assertEquals(HairType.LONG_CURLY, hero.getHairType());
     assertEquals(HairColor.BLOND, hero.getHairColor());
-
   }
 
+  /**
+   *Test correct toString method when hero has no hair type or color.
+   */
+  @Test
+  public void testHeroToStringNoHairTypeNoHairColor() {
+    final String heroName = "Hero Test";
+    final Hero hero = new Hero.Builder(Profession.PRIEST, heroName)
+        .withArmor(Armor.LEATHER)
+        .withWeapon(Weapon.BOW)
+        .build();
+
+    String heroToString = hero.toString();
+    assertEquals("This is a priest named Hero Test wearing leather and "
+        + "wielding a bow.", heroToString);
+  }
+
+  /**
+   * Test correct toString when hero has no weapon.
+   */
+  @Test
+  public void testHeroToStringNoWeapon() {
+    final String heroName = "Hero Test";
+    final Hero hero = new Hero.Builder(Profession.THIEF, heroName)
+        .withArmor(Armor.CLOTHES)
+        .withHairColor(HairColor.WHITE)
+        .withHairType(HairType.SHORT)
+        .build();
+
+    String heroToString = hero.toString();
+    assertEquals("This is a thief named Hero Test with white short hair"
+        + " wearing clothes.", heroToString);
+  }
 }
