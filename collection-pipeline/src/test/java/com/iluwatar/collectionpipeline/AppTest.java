@@ -29,15 +29,58 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests that Collection Pipeline methods work as expected.
  */
 public class AppTest {
-  
+
   private List<Car> cars = CarFactory.createCars();
-  
+
+
+  @BeforeAll
+  public static void beforeAll() {
+    int branches = 12;
+    Car.visitedBranchGlobal = new boolean[branches];
+    Car.visitedBranchLocal = new boolean[branches];
+  }
+
+  @BeforeEach
+  public void beforeEach() {
+    Arrays.fill(Car.visitedBranchLocal, false);
+  }
+
+  @AfterEach
+  public void afterEach() {
+    boolean verbose = false;
+
+    for (int i = 0; i < Car.visitedBranchLocal.length; i++) {
+      if (Car.visitedBranchLocal[i]) {
+        Car.visitedBranchGlobal[i] = true;
+      }
+    }
+    if (verbose) {
+      for (int i = 0; i < Car.visitedBranchLocal.length; i++) {
+        System.out.format("Branch %d covered: %b.\n", i, Car.visitedBranchLocal[i]);
+      }
+    }
+  }
+
+  @AfterAll
+  public static void afterAll() {
+    int cover = 0;
+    for (int i = 0; i < Car.visitedBranchGlobal.length; i++) {
+      System.out.format("Branch %d covered: %b.\n", i, Car.visitedBranchGlobal[i]);
+      if (Car.visitedBranchGlobal[i]) {
+        cover++;
+      }
+    }
+    System.out.println("Test done, results:");
+    System.out.format("Branch cover is: %f.\n", (double) cover/Car.visitedBranchGlobal.length);
+  }
+
   @Test
   public void testGetModelsAfter2000UsingFor() {
     List<String> models = ImperativeProgramming.getModelsAfter2000(cars);
@@ -75,5 +118,18 @@ public class AppTest {
     List<Car> modelsImperative = ImperativeProgramming.getSedanCarsOwnedSortedByDate(Arrays.asList(john));
     assertEquals(modelsExpected, modelsFunctional);
     assertEquals(modelsExpected, modelsImperative);
+  }
+
+  @Test
+  public void testEqualsSelf() {
+    Car car = new Car("Toyota", "Prius", 2011, Category.SEDAN);
+    Assert.assertTrue(car.equals(car));
+  }
+
+  @Test
+  public void testOneCarNullMaker() {
+    Car car1 = new Car(null,"Matrix", 2001,Category.JEEP);
+    Car car2 = new Car("Mazzerutzi","Matrix", 2001,Category.JEEP);
+    Assert.assertFalse(car1.equals(car2));
   }
 }
