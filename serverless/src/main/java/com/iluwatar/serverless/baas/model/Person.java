@@ -91,21 +91,29 @@ public class Person implements Serializable {
 
   @Override
   public boolean equals(Object o) {
+    boolean nullObj = false;
     coverage[8] = true; //Default
     if (this == o) {
       coverage[0] = true;
       return true;
     }
+
+    if (o == null) {
+      nullObj = true;
+      coverage[1] = true;
+    }
+
+    if (nullObj) {
+      return false;
+    }
+
     if (o == null || getClass() != o.getClass()) {
-      if (o == null) {
-        coverage[1] = true;
-        return false;
-      }
       if (getClass() != o.getClass()) {
         coverage[2] = true;
-        return false;
       }
+      return false;
     }
+
 
     Person person = (Person) o;
 
