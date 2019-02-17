@@ -22,10 +22,6 @@
  */
 package com.iluwatar.repository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,6 +35,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.google.common.collect.Lists;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test case to test the functions of {@link PersonRepository}, beside the CRUD functions, the query
@@ -119,9 +117,59 @@ public class RepositoryTest {
     assertEquals(terry, actual);
   }
 
+  @Test
+  public void testEqualsPositive() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    assertTrue(p1.equals(p1));
+
+    Person p2 = new Person("John", "Johnsson", 20);
+    assertTrue(p1.equals(p2));
+  }
+
+  @Test
+  public void testEqualsNegative() {
+
+    //Different first name
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("Eric", "Johnsson", 20);
+    assertFalse(p1.equals(p2));
+
+    //Different surname
+    p1 = new Person("John", "Johnsson", 20);
+    p2 = new Person("John", "Ericsson", 20);
+    assertFalse(p1.equals(p2));
+
+    //Different age
+    p1 = new Person("John", "Johnsson", 20);
+    p2 = new Person("John", "Johnsson", 21);
+    assertFalse(p1.equals(p2));
+
+    //Different id
+    p2 = new Person("John", "Johnsson", 20);
+    p1.setId((long) 1);
+    assertFalse(p1.equals(p2));
+    assertFalse(p2.equals(p1));
+
+    p2.setId((long) 2);
+    assertFalse(p1.equals(p2));
+
+    //Empty constructor case
+    p1 = new Person();
+    p2 = new Person("John", "Johnsson", 20);
+    assertFalse(p1.equals(p2));
+    assertFalse(p2.equals(p1));
+
+    //null-comparision
+    assertFalse(p1.equals(null));
+
+    //Other class comparision
+    int notAPerson = 1;
+    assertFalse(p2.equals(notAPerson));
+
+  }
+
   @AfterEach
   public void cleanup() {
-
     repository.deleteAll();
   }
 
