@@ -35,7 +35,8 @@ import java.util.Hashtable;
  */
 
 public class QuadTree {
-  public static boolean[] localCoveredBranches = new boolean[8];
+  static boolean[] localCoveredBranches = new boolean[8];
+  static boolean[] coveredBranches = new boolean[8];
   Rect boundary;
   int capacity;
   boolean divided;
