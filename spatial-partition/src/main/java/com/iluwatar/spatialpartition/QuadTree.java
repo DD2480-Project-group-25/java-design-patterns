@@ -35,8 +35,7 @@ import java.util.Hashtable;
  */
 
 public class QuadTree {
-  public static boolean[] coveredBranches = new boolean[8];
-  boolean[] localCoveredBranches;
+  public static boolean[] localCoveredBranches = new boolean[8];
   Rect boundary;
   int capacity;
   boolean divided;
@@ -55,45 +54,36 @@ public class QuadTree {
     this.northeast = null;
     this.southwest = null; 
     this.southeast = null;
-    localCoveredBranches = new boolean[8];
   }
 
   void insert(Point p) {
     if (!this.boundary.contains(p)) {
-      coveredBranches[0] = true;
       localCoveredBranches[0] = true;
       return;
     } else {
       if (this.points.size() < this.capacity) {
-        coveredBranches[1] = true;
         localCoveredBranches[1] = true;
         points.put(p.id, p);
       } else {
         if (!this.divided) {
-          coveredBranches[2] = true;
           localCoveredBranches[2] = true;
           this.divide();
         }
 
         if (this.northwest.boundary.contains(p)) {
-          coveredBranches[3] = true;
           localCoveredBranches[3] = true;
           this.northwest.insert(p);
         } else if (this.northeast.boundary.contains(p)) {
-          coveredBranches[4] = true;
           localCoveredBranches[4] = true;
           this.northeast.insert(p);
         } else if (this.southwest.boundary.contains(p)) {
-          coveredBranches[5] = true;
           localCoveredBranches[5] = true;
           this.southwest.insert(p);
         } else if (this.southeast.boundary.contains(p)) {
-          coveredBranches[6] = true;
           localCoveredBranches[6] = true;
           this.southeast.insert(p);
         }
       }
-      coveredBranches[7] = true;
       localCoveredBranches[7] = true;
     }
     //For checking what branches are missed in individual test cases

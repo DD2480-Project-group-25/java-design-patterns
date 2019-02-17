@@ -30,6 +30,8 @@ import java.util.Hashtable;
 import java.util.Random;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -38,17 +40,33 @@ import org.junit.jupiter.api.Test;
 
 class QuadTreeTest {
 
+  private static boolean[] coveredBranches;
+
+  @BeforeAll
+  public static void setCoveredBranches() {
+    coveredBranches = new boolean[8];
+  }
+
   @AfterAll
     public static void printCoveredBranches() {
-    System.out.println(Arrays.toString(QuadTree.coveredBranches));
+    System.out.println(Arrays.toString(coveredBranches));
     int count = 0;
-    for (int i = 0 ; i < QuadTree.coveredBranches.length; i++) {
-      if (QuadTree.coveredBranches[i]) {
+    for (int i = 0 ; i < coveredBranches.length; i++) {
+      if (coveredBranches[i]) {
         count++;
       }
     }
-    float fraction = (float) count / QuadTree.coveredBranches.length;
+    float fraction = (float) count / coveredBranches.length;
     System.out.println("\n" + fraction * 100 + "% branch coverage\n");
+  }
+
+  @AfterEach
+  public void addCoveredBranches() {
+    for (int i = 0 ; i < coveredBranches.length ; i++) {
+      if (QuadTree.localCoveredBranches[i]) {
+        coveredBranches[i] = true;
+      }
+    }
   }
 
   @Test
