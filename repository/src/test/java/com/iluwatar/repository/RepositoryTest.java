@@ -124,6 +124,17 @@ public class RepositoryTest {
 
     Person p2 = new Person("John", "Johnsson", 20);
     assertTrue(p1.equals(p2));
+
+    //No names for both persons
+    p1.setName(null);
+    p2.setName(null);
+    assertTrue(p1.equals(p2));
+
+    p1.setName("John");
+    p2.setName("John");
+    p1.setSurname(null);
+    p2.setSurname(null);
+    assertTrue(p1.equals(p2));
   }
 
   @Test
@@ -152,6 +163,20 @@ public class RepositoryTest {
 
     p2.setId((long) 2);
     assertFalse(p1.equals(p2));
+
+    //No first name for one person
+    p1 = new Person("John", "Johnsson", 20);
+    p2 = new Person("John", "Johnsson", 20);
+    p1.setName(null);
+    assertFalse(p1.equals(p2));
+    assertFalse(p2.equals(p1));
+
+    //No surname for one person
+    p1 = new Person("John", "Johnsson", 20);
+    p2 = new Person("John", "Johnsson", 20);
+    p1.setSurname(null);
+    assertFalse(p1.equals(p2));
+    assertFalse(p2.equals(p1));
 
     //Empty constructor case
     p1 = new Person();
