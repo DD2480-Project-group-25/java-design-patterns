@@ -134,21 +134,24 @@ public class RepositoryTest {
    * Tests positive instances for method Person.equals()
    */
   @Test
-  public void testEqualsPositive() {
+  public void compareToSelf() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    assertTrue(p1.equals(p1));
+  }
+
+  @Test
+  public void testEqualNullNames() {
     Person p1 = new Person("John", "Johnsson", 20);
     Person p2 = new Person("John", "Johnsson", 20);
-
-    //Comparision with self
-    assertTrue(p1.equals(p1));
-
-    //Two Person-objects with no names
     p1.setName(null);
     p2.setName(null);
     assertTrue(p1.equals(p2));
+  }
 
-    p1.setName("John");
-    p2.setName("John");
-    //Two Person-objects with no surnames
+  @Test
+  public void testEqualNullSurnames() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Johnsson", 20);
     p1.setSurname(null);
     p2.setSurname(null);
     assertTrue(p1.equals(p2));
@@ -158,48 +161,65 @@ public class RepositoryTest {
    * Tests negative instances for method Person.equals()
    */
   @Test
-  public void testEqualsNegative() {
-
-    //Different first names
+  public void testDifferentNames() {
     Person p1 = new Person("John", "Johnsson", 20);
     Person p2 = new Person("Eric", "Johnsson", 20);
     assertFalse(p1.equals(p2));
+  }
 
-    //Different surnames
-    p1 = new Person("John", "Johnsson", 20);
-    p2 = new Person("John", "Ericsson", 20);
+  @Test
+  public void testDifferentSurnames() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Ericsson", 20);
     assertFalse(p1.equals(p2));
+  }
 
-    //One person has id, not the other
-    p2 = new Person("John", "Johnsson", 20);
+  @Test
+  public void testNoId() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Johnsson", 20);
     p1.setId((long) 1);
     assertFalse(p1.equals(p2));
     assertFalse(p2.equals(p1));
+  }
 
-    //Different ids
+  @Test
+  public void testDifferentIds() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Johnsson", 20);
     p2.setId((long) 2);
     assertFalse(p1.equals(p2));
+  }
 
-    //No first name for one person
-    p1 = new Person("John", "Johnsson", 20);
-    p2 = new Person("John", "Johnsson", 20);
+  @Test
+  public void testNameIsNull() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Johnsson", 20);
     p1.setName(null);
     assertFalse(p1.equals(p2));
     assertFalse(p2.equals(p1));
+  }
 
-    //No surname for one person
-    p1 = new Person("John", "Johnsson", 20);
+  @Test
+  public void testSurnameIsNull() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Johnsson", 20);
     p1.setSurname(null);
     assertFalse(p1.equals(p2));
     assertFalse(p2.equals(p1));
+  }
 
-    //null-comparision
+  @Test
+  public void testObjectIsNull() {
+    Person p1 = new Person("John", "Johnsson", 20);
     assertFalse(p1.equals(null));
+  }
 
-    //Comparision with object from other class
+  @Test
+  public void testNonPersonObject() {
+    Person p1 = new Person("John", "Johnsson", 20);
     int notAPerson = 1;
-    assertFalse(p2.equals(notAPerson));
-
+    assertFalse(p1.equals(notAPerson));
   }
 
   @AfterEach
