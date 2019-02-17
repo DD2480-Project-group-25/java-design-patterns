@@ -31,6 +31,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -46,12 +47,15 @@ import com.google.common.collect.Lists;
 @ContextConfiguration(locations = { "classpath:applicationContext.xml" })
 public class RepositoryTest {
 
-  static boolean[] coveredBranches;
-
   @BeforeAll
   public static void setCoveredBranches() {
-    coveredBranches = new boolean[14];
+    Person.coveredBranches = new boolean[14];
     Person.localCoveredBranches = new boolean[14];
+  }
+
+  @BeforeEach
+  public void resetLocalCoveredBranches() {
+    Arrays.fill(Person.localCoveredBranches, false);
   }
 
   @Resource
@@ -135,9 +139,9 @@ public class RepositoryTest {
    */
   @AfterEach
   public void addCoveredBranches() {
-    for (int i = 0 ; i < coveredBranches.length ; i++) {
+    for (int i = 0 ; i < Person.coveredBranches.length ; i++) {
       if (Person.localCoveredBranches[i]) {
-        coveredBranches[i] = true;
+        Person.coveredBranches[i] = true;
       }
     }
   }
@@ -147,14 +151,14 @@ public class RepositoryTest {
    */
   @AfterAll
   public static void printCoveredBranches() {
-    System.out.println(Arrays.toString(coveredBranches));
+    System.out.println(Arrays.toString(Person.coveredBranches));
     int count = 0;
-    for (int i = 0 ; i < coveredBranches.length; i++) {
-      if (coveredBranches[i]) {
+    for (int i = 0 ; i < Person.coveredBranches.length; i++) {
+      if (Person.coveredBranches[i]) {
         count++;
       }
     }
-    float fraction = (float) count / coveredBranches.length;
+    float fraction = (float) count / Person.coveredBranches.length;
     System.out.println("\n" + fraction * 100 + "% branch coverage\n");
   }
 }

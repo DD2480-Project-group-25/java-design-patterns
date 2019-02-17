@@ -42,7 +42,8 @@ public class Person {
   private String surname;
 
   private int age;
-  public static boolean[] localCoveredBranches = new boolean[14];
+  static boolean[] coveredBranches = new boolean[14];
+  static boolean[] localCoveredBranches = new boolean[14];
 
   public Person() {
   }
