@@ -65,7 +65,6 @@ public class HeroTest {
       } else if (i == Hero.coverage.length - 1) {
         System.out.print(Hero.CONDS[i] + " is " + Hero.coverage[i]);
       }
-      Hero.coverage[i] = false;
     }
     System.out.println("]");
     Arrays.fill(Hero.coverage, false);
