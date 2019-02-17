@@ -43,13 +43,17 @@ import static org.junit.jupiter.api.Assertions.*;
  * by {@link org.springframework.data.jpa.domain.Specification} are also test.
  *
  * Previously tested requirements of Person.equals() (Coverage 24%) :
- * -
+ * - Comparision of age.
+ * - Positive instance, when compared objects are equal.
  Previously untested but now tested requirements of Person.equals() (Coverage 100%):
- * - Compares identity
- * - If the input object is Null
- * - If the input object is not of class Person
- * - Compares firstName, lastName and address (both positive and negative tests)
- * - If firstName, lastName or address is Null (edited)
+ * - Positive instances:
+ *    - Compare object to self.
+ *    - Compare equal objects that don't have first names or surnames.
+ * - Negative instances:
+ *    - Compare non-equal first names, surnames and id's.
+ *    - Compare if one Person-object's first name, surname or id is null.
+ *    - If input object is null.
+ *    - If the input object is not of class Person.
  */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = { "classpath:applicationContext.xml" })
@@ -131,13 +135,11 @@ public class RepositoryTest {
    */
   @Test
   public void testEqualsPositive() {
-    //Comparision with self
     Person p1 = new Person("John", "Johnsson", 20);
-    assertTrue(p1.equals(p1));
-
-    //Comparision with other equal object
     Person p2 = new Person("John", "Johnsson", 20);
-    assertTrue(p1.equals(p2));
+
+    //Comparision with self
+    assertTrue(p1.equals(p1));
 
     //Two Person-objects with no names
     p1.setName(null);
@@ -168,11 +170,6 @@ public class RepositoryTest {
     p2 = new Person("John", "Ericsson", 20);
     assertFalse(p1.equals(p2));
 
-    //Different ages
-    p1 = new Person("John", "Johnsson", 20);
-    p2 = new Person("John", "Johnsson", 21);
-    assertFalse(p1.equals(p2));
-
     //One person has id, not the other
     p2 = new Person("John", "Johnsson", 20);
     p1.setId((long) 1);
@@ -192,14 +189,7 @@ public class RepositoryTest {
 
     //No surname for one person
     p1 = new Person("John", "Johnsson", 20);
-    p2 = new Person("John", "Johnsson", 20);
     p1.setSurname(null);
-    assertFalse(p1.equals(p2));
-    assertFalse(p2.equals(p1));
-
-    //Empty constructor case
-    p1 = new Person();
-    p2 = new Person("John", "Johnsson", 20);
     assertFalse(p1.equals(p2));
     assertFalse(p2.equals(p1));
 
