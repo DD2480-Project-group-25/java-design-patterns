@@ -32,6 +32,9 @@ public class PlayerDetails {
   private final String emailAddress;
   private final String bankAccountNumber;
   private final String phoneNumber;
+  public static boolean[] visitedBranchGlobal;
+  public static boolean[] visitedBranchLocal;
+
 
   /**
    * Constructor.
@@ -82,37 +85,63 @@ public class PlayerDetails {
 
   @Override
   public boolean equals(Object obj) {
+    // Branch1
     if (this == obj) {
+      visitedBranchLocal[0] = true;
       return true;
     }
+    // Branch2
     if (obj == null) {
+      visitedBranchLocal[1] = true;
       return false;
     }
+    // Branch3
     if (getClass() != obj.getClass()) {
+      visitedBranchLocal[2] = true;
       return false;
     }
+    // Branch4
     PlayerDetails other = (PlayerDetails) obj;
     if (bankAccountNumber == null) {
+      visitedBranchLocal[3] = true;
+      // Branch5
       if (other.bankAccountNumber != null) {
+        visitedBranchLocal[4] = true;
         return false;
       }
+      // Branch6
     } else if (!bankAccountNumber.equals(other.bankAccountNumber)) {
+      visitedBranchLocal[5] = true;
       return false;
     }
+    // Branch7
     if (emailAddress == null) {
+      visitedBranchLocal[6] = true;
+      // Branch8
       if (other.emailAddress != null) {
+        visitedBranchLocal[7] = true;
         return false;
       }
+      // Branch9
     } else if (!emailAddress.equals(other.emailAddress)) {
+      visitedBranchLocal[8] = true;
       return false;
     }
+    // Branch10
     if (phoneNumber == null) {
+      visitedBranchLocal[9] = true;
+      // Branch11
       if (other.phoneNumber != null) {
+        visitedBranchLocal[10] = true;
         return false;
       }
+      // Branch12
     } else if (!phoneNumber.equals(other.phoneNumber)) {
+      visitedBranchLocal[11] = true;
       return false;
     }
+    // Branch13
+    visitedBranchLocal[12] = true;
     return true;
   }
 }
