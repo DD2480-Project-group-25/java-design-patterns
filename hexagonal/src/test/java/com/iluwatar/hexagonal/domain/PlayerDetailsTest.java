@@ -22,7 +22,9 @@
  */
 package com.iluwatar.hexagonal.domain;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -33,6 +35,46 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  *
  */
 class PlayerDetailsTest {
+  @BeforeAll
+  public static void beforeAll() {
+    int branches = 13;
+    PlayerDetails.visitedBranchGlobal = new boolean[branches];
+    PlayerDetails.visitedBranchLocal = new boolean[branches];
+  }
+
+  @BeforeEach
+  public void beforeEach() {
+    Arrays.fill(PlayerDetails.visitedBranchLocal, false);
+  }
+
+  @AfterEach
+  public void afterEach() {
+    boolean verbose = false;
+
+    for (int i = 0; i < PlayerDetails.visitedBranchLocal.length; i++) {
+      if (PlayerDetails.visitedBranchLocal[i]) {
+        PlayerDetails.visitedBranchGlobal[i] = true;
+      }
+    }
+    if (verbose) {
+      for (int i = 0; i < PlayerDetails.visitedBranchLocal.length; i++) {
+        System.out.format("Branch %d covered: %b.\n", i, PlayerDetails.visitedBranchLocal[i]);
+      }
+    }
+  }
+
+  @AfterAll
+  public static void afterAll() {
+    int cover = 0;
+    for (int i = 0; i < PlayerDetails.visitedBranchGlobal.length; i++) {
+      System.out.format("Branch %d covered: %b.\n", i, PlayerDetails.visitedBranchGlobal[i]);
+      if (PlayerDetails.visitedBranchGlobal[i]) {
+        cover++;
+      }
+    }
+    System.out.println("Test done, results:");
+    System.out.format("Branch cover is: %f.\n", (double) cover / PlayerDetails.visitedBranchGlobal.length);
+  }
 
   @Test
   void testEquals() {
