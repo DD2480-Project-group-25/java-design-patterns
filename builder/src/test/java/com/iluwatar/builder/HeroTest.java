@@ -84,24 +84,6 @@ public class HeroTest {
   }
 
   /**
-   * Test correct toString method when hero has no hair type, only hair color.
-   */
-  @Test
-  public void testHeroToStringNoHair() {
-    final String heroName = "Hero Test";
-    final Hero hero = new Hero.Builder(Profession.MAGE, heroName)
-        .withArmor(Armor.CLOTHES)
-        .withWeapon(Weapon.DAGGER)
-        .withHairColor(HairColor.RED)
-        .build();
-
-    String heroToString = hero.toString();
-    assertEquals("This is a mage named Hero Test with red "
-        + "hair wearing clothes and wielding a dagger.", heroToString);
-
-  }
-
-  /**
    *Test correct toString method when hero has no hair type or color.
    */
   @Test
