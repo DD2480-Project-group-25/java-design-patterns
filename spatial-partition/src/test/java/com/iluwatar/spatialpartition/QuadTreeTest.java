@@ -31,8 +31,11 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Testing QuadTree class.
+ * Previously tested requirements of QuadTree.insert() (Coverage 86%) :
+ * - Checking that points inserted within the field can be found in the right spot.
+ Previously untested but now tested requirements of Person.equals() (Coverage 93%):
+ * - Checking that points inserted outside the field can't be found.
  */
-
 class QuadTreeTest {
 
   /**
