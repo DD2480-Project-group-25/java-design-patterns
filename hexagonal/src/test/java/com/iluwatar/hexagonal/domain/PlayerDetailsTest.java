@@ -73,7 +73,7 @@ class PlayerDetailsTest {
       }
     }
     System.out.println("Test done, results:");
-    System.out.format("Branch cover is: %f.\n", (double) cover / PlayerDetails.visitedBranchGlobal.length);
+    System.out.format("Branch cover is: %f %%.\n", 100 * ((double) cover / PlayerDetails.visitedBranchGlobal.length));
   }
 
   @Test
