@@ -32,6 +32,19 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
+ * Added tests for:
+ * <ul>
+ *   <li> Car object is equal to itself </li>
+ *   <li> Comparing cars where one has null manufaturer returns false </li>
+ *   <li> Car objects with different production year is not the same </li>
+ *   <li> Comparing Car with null object returnsfalse </li>
+ *   <li> Comparing Car with different object type returns false  </li>
+ *   <li> Cars of from different categories are not the same  </li>
+ *   <li> Cars with different manufacturers are not the same </li>
+ *   <li> Comparing cars where one has null model returns false </li>
+ * </ul>
+ * Improves coverage of class Car from 41% to 91%
+ *
  * Tests that Collection Pipeline methods work as expected.
  */
 public class AppTest {
@@ -77,19 +90,29 @@ public class AppTest {
     assertEquals(modelsExpected, modelsImperative);
   }
 
+  /**
+   * Verify that a Car object is equals to itself.
+   */
   @Test
   public void testEqualsSelf() {
     Car car = new Car("Toyota", "Prius", 2011, Category.SEDAN);
     assertTrue(car.equals(car));
   }
 
+  /**
+   * Verify that equals is false when one car has a "null" manufacturer.
+   */
   @Test
   public void testOneCarNullMaker() {
     Car car1 = new Car(null, "Matrix", 2001, Category.JEEP);
     Car car2 = new Car("Mazzerutzi", "Matrix", 2001, Category.JEEP);
     assertFalse(car1.equals(car2));
+    assertFalse(car2.equals(car1));
   }
 
+  /**
+   * Verify that two cars with different production years are not the same.
+   */
   @Test
   public void testDifferentYears() {
     Car car1 = new Car("Mazzerutzi", "Matrix", 2001, Category.JEEP);
@@ -97,12 +120,18 @@ public class AppTest {
     assertFalse(car1.equals(car2));
   }
 
+  /**
+   * Verify that comparison with null object returns false.
+   */
   @Test
   public void testNullobject() {
     Car car1 = new Car("Mazzerutzi", "Matrix", 2001, Category.JEEP);
     assertFalse(car1.equals(null));
   }
 
+  /**
+   * Verify that comparison with object of different type returns false.
+   */
   @Test
   public void testDifferentObjects() {
     Car car1 = new Car("Mazzerutzi", "Matrix", 2001, Category.JEEP);
@@ -110,6 +139,9 @@ public class AppTest {
     assertFalse(car1.equals(str));
   }
 
+  /**
+   * Verify that comparison with cars of different category returns false.
+   */
   @Test
   public void testDifferentCategories() {
     Car car1 = new Car("Mazzerutzi", "Matrix", 2001, Category.SEDAN);
@@ -118,6 +150,9 @@ public class AppTest {
 
   }
 
+  /**
+   * Verify that comparison with cars produced by different manufacturers returns false.
+   */
   @Test
   public void testDifferentMakers() {
     Car car1 = new Car("Volkeswagen", "Matrix", 2001, Category.JEEP);
@@ -125,6 +160,10 @@ public class AppTest {
     assertFalse(car1.equals(car2));
   }
 
+  /**
+   * Verify that comparison with a car of null model returns false.
+   * Tests that this holds for comparison in both ways.
+   */
   @Test
   public void testNullModels() {
     Car car1 = new Car("Mazzerutzi", null, 2001, Category.JEEP);
