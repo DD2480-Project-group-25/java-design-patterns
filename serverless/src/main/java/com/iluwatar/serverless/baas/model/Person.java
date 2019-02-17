@@ -42,7 +42,8 @@ public class Person implements Serializable {
       "o == null", "getClass() != o.getClass()",
       "firstName != null && !firstName.equals(person.firstName)",
       "firstName == null && person.firstName != null", "lastName != null && !lastName.equals(person.lastName)",
-      "lastName == null && person.lastName != null", "address != null", "default"};
+      "lastName == null && person.lastName != null", "address != null && address.equals(person.address)",
+      "address == null &&  person.address == null", "default"};
 
   private static final long serialVersionUID = -3413087924608627075L;
 
@@ -92,7 +93,7 @@ public class Person implements Serializable {
   @Override
   public boolean equals(Object o) {
     boolean nullObj = false;
-    coverage[8] = true; //Default
+    coverage[9] = true; //Default
     if (this == o) {
       coverage[0] = true;
       return true;
@@ -137,8 +138,11 @@ public class Person implements Serializable {
       return false;
     }
 
-    if (address != null) {
+    if (address != null && address.equals(person.address)) {
       coverage[7] = true;
+    }
+    if (address == null &&  person.address == null) {
+      coverage[8] = true;
     }
     return address != null ? address.equals(person.address) : person.address == null;
   }

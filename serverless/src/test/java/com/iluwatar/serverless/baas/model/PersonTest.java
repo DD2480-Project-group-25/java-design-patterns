@@ -13,8 +13,8 @@ public class PersonTest {
 
   @BeforeAll
   public static void setupCoverage() {
-    Person.coverage = new boolean[9];
-    Person.totalCoverage = new boolean[9];
+    Person.coverage = new boolean[10];
+    Person.totalCoverage = new boolean[10];
   }
 
   /**
@@ -23,7 +23,7 @@ public class PersonTest {
   @AfterEach
   public void printAndCleanCoverage() {
     // Method did not run if default is false
-    if (!Person.coverage[8]) {
+    if (!Person.coverage[9]) {
       System.out.println("The method did not run");
       return;
     }
