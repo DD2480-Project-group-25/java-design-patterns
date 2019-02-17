@@ -37,7 +37,6 @@ public class PersonTest {
       } else if (i == Person.coverage.length - 1) {
         System.out.print(Person.EQUALS_CONDS[i] + " is " + Person.coverage[i]);
       }
-      Person.coverage[i] = false;
     }
     System.out.println("]");
     Arrays.fill(Person.coverage, false);
