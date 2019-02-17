@@ -37,6 +37,7 @@ class QuadTreeTest {
 
   /**
    * Test that point outside of field area is not inserted into the tree.
+   * Covers the case when QuadTree.insert() should return and stop recursive tree search.
    */
   @Test
   void testPointOutsideField() {
