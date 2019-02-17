@@ -60,12 +60,8 @@ public class QuadTree {
 
   void insert(Point p) {
     if (!this.boundary.contains(p)) {
-      // Counting if
       coveredBranches[0] = true;
       localCoveredBranches[0] = true;
-      // Counting return
-      coveredBranches[7] = true;
-      localCoveredBranches[7] = true;
       return;
     } else {
       if (this.points.size() < this.capacity) {
@@ -97,6 +93,8 @@ public class QuadTree {
           this.southeast.insert(p);
         }
       }
+      coveredBranches[7] = true;
+      localCoveredBranches[7] = true;
     }
     //For checking what branches are missed in individual test cases
     //System.out.println(Arrays.toString(localCoveredBranches));
