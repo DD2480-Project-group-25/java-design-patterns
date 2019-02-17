@@ -8,6 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Test class for LambdaInfo, currently only testing equals()-method
  *
+ * Previously tested requirements of LambdaInfo.equals() (Coverage 0%) : None.
+ * Previously untested but now tested requirements of LambdaInfo.equals() (Coverage 100%):
+ * - Compares same object
+ * - If the input object is Null
+ * - If the input object is not of class LambdaInfo
+ * - Compares awsRequestId, logGroupName, logStreamName, functionName, functionVersion and memoryLimitInMb
+ * - If awsRequestId, logGroupName, logStreamName, functionName, functionVersion or memoryLimitInMb is Null
+ *
  * Created by helenaalinder 2/15-19
  */
 public class LambdaInfoTest {
