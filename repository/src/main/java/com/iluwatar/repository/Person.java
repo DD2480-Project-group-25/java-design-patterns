@@ -42,13 +42,19 @@ public class Person {
 
   private int age;
 
+  private static final int TOTALBRANCHES = 14;
+  public static boolean[] coveredBranches = new boolean[TOTALBRANCHES];
+  private boolean[] localCoveredBranches;
+
   public Person() {
+    localCoveredBranches = new boolean[TOTALBRANCHES];
   }
 
   /**
    * Constructor
    */
   public Person(String name, String surname, int age) {
+    localCoveredBranches = new boolean[TOTALBRANCHES];
     this.name = name;
     this.surname = surname;
     this.age = age;
@@ -105,6 +111,7 @@ public class Person {
 
   @Override
   public boolean equals(Object obj) {
+
     if (this == obj) {
       return true;
     }

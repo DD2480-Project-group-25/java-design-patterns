@@ -31,6 +31,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -125,4 +126,19 @@ public class RepositoryTest {
     repository.deleteAll();
   }
 
+  /**
+   * Checks coverage and prints out result.
+   */
+  @AfterAll
+  public static void printCoveredBranches() {
+    System.out.println(Arrays.toString(Person.coveredBranches));
+    int count = 0;
+    for (int i = 0 ; i < Person.coveredBranches.length; i++) {
+      if (Person.coveredBranches[i]) {
+        count++;
+      }
+    }
+    float fraction = (float) count / Person.coveredBranches.length;
+    System.out.println("\n" + fraction * 100 + "% branch coverage\n");
+  }
 }
