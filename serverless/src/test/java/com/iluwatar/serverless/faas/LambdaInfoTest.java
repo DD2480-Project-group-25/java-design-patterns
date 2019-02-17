@@ -40,7 +40,6 @@ public class LambdaInfoTest {
       } else if (i == LambdaInfo.coverage.length - 1) {
         System.out.print(LambdaInfo.CONDS[i] + " is " + LambdaInfo.coverage[i]);
       }
-      LambdaInfo.coverage[i] = false;
     }
     System.out.println("]");
     Arrays.fill(LambdaInfo.coverage, false);
