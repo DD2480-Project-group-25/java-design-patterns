@@ -22,14 +22,14 @@
  */
 package com.iluwatar.collectionpipeline;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests that Collection Pipeline methods work as expected.
@@ -75,5 +75,61 @@ public class AppTest {
     List<Car> modelsImperative = ImperativeProgramming.getSedanCarsOwnedSortedByDate(Arrays.asList(john));
     assertEquals(modelsExpected, modelsFunctional);
     assertEquals(modelsExpected, modelsImperative);
+  }
+
+  @Test
+  public void testEqualsSelf() {
+    Car car = new Car("Toyota", "Prius", 2011, Category.SEDAN);
+    assertTrue(car.equals(car));
+  }
+
+  @Test
+  public void testOneCarNullMaker() {
+    Car car1 = new Car(null, "Matrix", 2001, Category.JEEP);
+    Car car2 = new Car("Mazzerutzi", "Matrix", 2001, Category.JEEP);
+    assertFalse(car1.equals(car2));
+  }
+
+  @Test
+  public void testDifferentYears() {
+    Car car1 = new Car("Mazzerutzi", "Matrix", 2001, Category.JEEP);
+    Car car2 = new Car("Mazzerutzi", "Matrix", 2002, Category.JEEP);
+    assertFalse(car1.equals(car2));
+  }
+
+  @Test
+  public void testNullobject() {
+    Car car1 = new Car("Mazzerutzi", "Matrix", 2001, Category.JEEP);
+    assertFalse(car1.equals(null));
+  }
+
+  @Test
+  public void testDifferentObjects() {
+    Car car1 = new Car("Mazzerutzi", "Matrix", 2001, Category.JEEP);
+    String str = "Hej";
+    assertFalse(car1.equals(str));
+  }
+
+  @Test
+  public void testDifferentCategories() {
+    Car car1 = new Car("Mazzerutzi", "Matrix", 2001, Category.SEDAN);
+    Car car2 = new Car("Mazzerutzi", "Matrix", 2001, Category.JEEP);
+    assertFalse(car1.equals(car2));
+
+  }
+
+  @Test
+  public void testDifferentMakers() {
+    Car car1 = new Car("Volkeswagen", "Matrix", 2001, Category.JEEP);
+    Car car2 = new Car("Mazzerutzi", "Matrix", 2001, Category.JEEP);
+    assertFalse(car1.equals(car2));
+  }
+
+  @Test
+  public void testNullModels() {
+    Car car1 = new Car("Mazzerutzi", null, 2001, Category.JEEP);
+    Car car2 = new Car("Mazzerutzi", "Matrix", 2001, Category.JEEP);
+    assertFalse(car1.equals(car2));
+    assertFalse(car2.equals(car1));
   }
 }
