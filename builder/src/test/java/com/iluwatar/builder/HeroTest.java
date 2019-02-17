@@ -31,6 +31,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Date: 12/6/15 - 11:01 PM
  *
+ * Previously tested requirements of Hero.equals() (Coverage 86%) :
+ * - Hero has armor, weapon, hair type and hair color
+ * - Hero has no armor
+ * - In external tests existing hairType and hairType == BALD has been tested
+ * Previously untested but now tested requirements of Hero.equals() (Coverage 100%):
+ * - Hero has no hair type or hair color
+ * - Hero has no weapon
+ *
  * @author Jeroen Meulemeester
  */
 public class HeroTest {
@@ -73,7 +81,6 @@ public class HeroTest {
     assertEquals(Weapon.SWORD, hero.getWeapon());
     assertEquals(HairType.LONG_CURLY, hero.getHairType());
     assertEquals(HairColor.BLOND, hero.getHairColor());
-
   }
 
   /**
