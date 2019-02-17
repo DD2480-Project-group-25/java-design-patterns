@@ -3,6 +3,14 @@ package com.iluwatar.serverless.baas.model;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
+/*
+ * Documentation of requirements
+ * =============================
+ * This class didn't exist and so nothing in Address were tested.
+ * Therefore everything needed to be tested, i.e. (positive, negative).
+ *
+ * The tests added were guided by the Jacoco coverage tool.
+ */
 /**
  * Test Addresses for equality
  */
