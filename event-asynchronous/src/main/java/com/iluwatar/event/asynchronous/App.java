@@ -137,10 +137,10 @@ public class App {
 
   /**
    * Run program in interactive mode.
+   * this method is refactored. The CC is decreased from 14 to 6 according to Lizard.
    */
   public void runInteractiveMode() {
     EventManager eventManager = new EventManager();
-
     Scanner s = new Scanner(System.in);
     int option = -1;
     while (option != 4) {
@@ -148,64 +148,95 @@ public class App {
       LOGGER.info("(1) BOIL AN EGG \n(2) STOP BOILING THIS EGG \n(3) HOW ARE MY EGGS? \n(4) EXIT");
       LOGGER.info("Choose [1,2,3,4]: ");
       option = s.nextInt();
-
       if (option == 1) {
-        s.nextLine();
-        LOGGER.info("Boil multiple eggs at once (A) or boil them one-by-one (S)?: ");
-        String eventType = s.nextLine();
-        LOGGER.info("How long should this egg be boiled for (in seconds)?: ");
-        int eventTime = s.nextInt();
-        if (eventType.equalsIgnoreCase("A")) {
-          try {
-            int eventId = eventManager.createAsync(eventTime);
-            eventManager.start(eventId);
-            LOGGER.info("Egg [{}] is being boiled.", eventId);
-          } catch (MaxNumOfEventsAllowedException | LongRunningEventException | EventDoesNotExistException e) {
-            LOGGER.error(e.getMessage());
-          }
-        } else if (eventType.equalsIgnoreCase("S")) {
-          try {
-            int eventId = eventManager.create(eventTime);
-            eventManager.start(eventId);
-            LOGGER.info("Egg [{}] is being boiled.", eventId);
-          } catch (MaxNumOfEventsAllowedException | InvalidOperationException | LongRunningEventException
-              | EventDoesNotExistException e) {
-            LOGGER.error(e.getMessage());
-          }
-        } else {
-          LOGGER.info("Unknown event type.");
-        }
+        boilEgg(s, eventManager);
       } else if (option == 2) {
-        LOGGER.info("Which egg?: ");
-        int eventId = s.nextInt();
-        try {
-          eventManager.cancel(eventId);
-          LOGGER.info("Egg [{}] is removed from boiler.", eventId);
-        } catch (EventDoesNotExistException e) {
-          LOGGER.error(e.getMessage());
-        }
+        stopBoiling(s, eventManager);
       } else if (option == 3) {
-        s.nextLine();
-        LOGGER.info("Just one egg (O) OR all of them (A) ?: ");
-        String eggChoice = s.nextLine();
-
-        if (eggChoice.equalsIgnoreCase("O")) {
-          LOGGER.info("Which egg?: ");
-          int eventId = s.nextInt();
-          try {
-            eventManager.status(eventId);
-          } catch (EventDoesNotExistException e) {
-            LOGGER.error(e.getMessage());
-          }
-        } else if (eggChoice.equalsIgnoreCase("A")) {
-          eventManager.statusOfAllEvents();
-        }
+        eggStatus(s, eventManager);
       } else if (option == 4) {
         eventManager.shutdown();
       }
     }
-
     s.close();
+  }
+
+  /**
+   * This is a helper method for runInteractiveMode().
+   * The method is called when the user chooses option 1 which is
+   * to boil an egg.
+   * @param s the scanner used in runInteractiveMode()
+   * @param eventManager the eventmanager used in runInteractiveMode()
+   */
+  private void boilEgg(Scanner s, EventManager eventManager) {
+    s.nextLine();
+    LOGGER.info("Boil multiple eggs at once (A) or boil them one-by-one (S)?: ");
+    String eventType = s.nextLine();
+    LOGGER.info("How long should this egg be boiled for (in seconds)?: ");
+    int eventTime = s.nextInt();
+    if (eventType.equalsIgnoreCase("A")) {
+      try {
+        int eventId = eventManager.createAsync(eventTime);
+        eventManager.start(eventId);
+        LOGGER.info("Egg [{}] is being boiled.", eventId);
+      } catch (MaxNumOfEventsAllowedException | LongRunningEventException | EventDoesNotExistException e) {
+        LOGGER.error(e.getMessage());
+      }
+    } else if (eventType.equalsIgnoreCase("S")) {
+      try {
+        int eventId = eventManager.create(eventTime);
+        eventManager.start(eventId);
+        LOGGER.info("Egg [{}] is being boiled.", eventId);
+      } catch (MaxNumOfEventsAllowedException | InvalidOperationException | LongRunningEventException
+          | EventDoesNotExistException e) {
+        LOGGER.error(e.getMessage());
+      }
+    } else {
+      LOGGER.info("Unknown event type.");
+    }
+  }
+
+  /**
+   * This is a helper method for runInteractiveMode().
+   * The method is called when the user chooses option 2 which is
+   * to stop boiling an egg.
+   * @param s the scanner used in runInteractiveMode()
+   * @param eventManager the eventmanager used in runInteractiveMode()
+   */
+  private void stopBoiling(Scanner s, EventManager eventManager) {
+    LOGGER.info("Which egg?: ");
+    int eventId = s.nextInt();
+    try {
+      eventManager.cancel(eventId);
+      LOGGER.info("Egg [{}] is removed from boiler.", eventId);
+    } catch (EventDoesNotExistException e) {
+      LOGGER.error(e.getMessage());
+    }
+  }
+
+  /**
+   * This is a helper method for runInteractiveMode().
+   * The method is called when the user chooses option 3 which is
+   * to check the status of the egg.
+   * @param s the scanner used in runInteractiveMode()
+   * @param eventManager the eventmanager used in runInteractiveMode()
+   */
+  private void eggStatus(Scanner s, EventManager eventManager) {
+    s.nextLine();
+    LOGGER.info("Just one egg (O) OR all of them (A) ?: ");
+    String eggChoice = s.nextLine();
+
+    if (eggChoice.equalsIgnoreCase("O")) {
+      LOGGER.info("Which egg?: ");
+      int eventId = s.nextInt();
+      try {
+        eventManager.status(eventId);
+      } catch (EventDoesNotExistException e) {
+        LOGGER.error(e.getMessage());
+      }
+    } else if (eggChoice.equalsIgnoreCase("A")) {
+      eventManager.statusOfAllEvents();
+    }
   }
 
 }
