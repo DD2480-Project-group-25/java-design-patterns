@@ -30,6 +30,13 @@ import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+/*
+ * Test requirements documentation
+ * ===============================
+ *
+ * Different edge cases as null pointers, other classes, same instance
+ * were not tested. Tests for this were added.
+ */
 /**
  * Test Lottery Tickets for equality
  */
@@ -48,5 +55,78 @@ class LotteryTicketTest {
     LotteryNumbers numbers3 = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 8)));
     LotteryTicket ticket3 = new LotteryTicket(new LotteryTicketId(), details3, numbers3);
     assertNotEquals(ticket1, ticket3);
+  }
+
+  @Test
+  void sameObject() {
+    PlayerDetails details = new PlayerDetails("bob@foo.bar", "1212-121212", "+34332322");
+    LotteryNumbers numbers = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    LotteryTicket ticket = new LotteryTicket(new LotteryTicketId(), details, numbers);
+
+    assertEquals(ticket, ticket);
+  }
+
+  @Test
+  void otherNull() {
+    PlayerDetails details = new PlayerDetails("bob@foo.bar", "1212-121212", "+34332322");
+    LotteryNumbers numbers = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    LotteryTicket ticket = new LotteryTicket(new LotteryTicketId(), details, numbers);
+
+    assertNotEquals(ticket, null);
+  }
+
+  @Test
+  void otherClass() {
+    PlayerDetails details = new PlayerDetails("bob@foo.bar", "1212-121212", "+34332322");
+    LotteryNumbers numbers = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    LotteryTicket ticket = new LotteryTicket(new LotteryTicketId(), details, numbers);
+
+    assertNotEquals(ticket, "");
+  }
+
+  @Test
+  void numbersNullOtherNumbersNotNull() {
+    PlayerDetails details1 = new PlayerDetails("bob@foo.bar", "1212-121212", "+34332322");
+    LotteryTicket ticket1 = new LotteryTicket(new LotteryTicketId(), details1, null);
+
+    PlayerDetails details2 = new PlayerDetails("elsa@foo.bar", "1223-121212", "+49332322");
+    LotteryNumbers numbers = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    LotteryTicket ticket2 = new LotteryTicket(new LotteryTicketId(), details2, numbers);
+
+    assertNotEquals(ticket1, ticket2);
+  }
+
+  @Test
+  void numbersNullOtherNumbersNull() {
+    PlayerDetails details1 = new PlayerDetails("bob@foo.bar", "1212-121212", "+34332322");
+    LotteryTicket ticket1 = new LotteryTicket(new LotteryTicketId(), details1, null);
+
+    PlayerDetails details2 = new PlayerDetails("elsa@foo.bar", "1223-121212", "+49332322");
+    LotteryTicket ticket2 = new LotteryTicket(new LotteryTicketId(), details2, null);
+
+    assertNotEquals(ticket1, ticket2);
+  }
+
+  @Test
+  void playerNullOtherPlayerNotNull() {
+    LotteryNumbers numbers1 = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    LotteryTicket ticket1 = new LotteryTicket(new LotteryTicketId(), null, numbers1);
+
+    PlayerDetails details2 = new PlayerDetails("elsa@foo.bar", "1223-121212", "+49332322");
+    LotteryNumbers numbers2 = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    LotteryTicket ticket2 = new LotteryTicket(new LotteryTicketId(), details2, numbers2);
+
+    assertNotEquals(ticket1, ticket2);
+  }
+
+  @Test
+  void playerNullOtherPlayerNull() {
+    LotteryNumbers numbers1 = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    LotteryTicket ticket1 = new LotteryTicket(new LotteryTicketId(), null, numbers1);
+
+    LotteryNumbers numbers2 = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    LotteryTicket ticket2 = new LotteryTicket(new LotteryTicketId(), null, numbers2);
+
+    assertEquals(ticket1, ticket2);
   }
 }
