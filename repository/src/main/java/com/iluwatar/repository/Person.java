@@ -25,6 +25,7 @@ package com.iluwatar.repository;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Arrays;
 
 /**
  * 
@@ -113,39 +114,70 @@ public class Person {
   public boolean equals(Object obj) {
 
     if (this == obj) {
+      coveredBranches[0] = true;
+      localCoveredBranches[0] = true;
       return true;
     }
     if (obj == null) {
+      coveredBranches[1] = true;
+      localCoveredBranches[1] = true;
       return false;
     }
     if (getClass() != obj.getClass()) {
+      coveredBranches[2] = true;
+      localCoveredBranches[2] = true;
       return false;
     }
     Person other = (Person) obj;
     if (age != other.age) {
+      coveredBranches[3] = true;
+      localCoveredBranches[3] = true;
       return false;
     }
     if (id == null) {
+      coveredBranches[4] = true;
+      localCoveredBranches[4] = true;
       if (other.id != null) {
+        coveredBranches[5] = true;
+        localCoveredBranches[5] = true;
         return false;
       }
     } else if (!id.equals(other.id)) {
+      coveredBranches[6] = true;
+      localCoveredBranches[6] = true;
       return false;
     }
     if (name == null) {
+      coveredBranches[7] = true;
+      localCoveredBranches[7] = true;
       if (other.name != null) {
+        coveredBranches[8] = true;
+        localCoveredBranches[8] = true;
         return false;
       }
     } else if (!name.equals(other.name)) {
+      coveredBranches[9] = true;
+      localCoveredBranches[9] = true;
       return false;
     }
     if (surname == null) {
+      coveredBranches[10] = true;
+      localCoveredBranches[10] = true;
       if (other.surname != null) {
+        coveredBranches[11] = true;
+        localCoveredBranches[11] = true;
         return false;
       }
     } else if (!surname.equals(other.surname)) {
+      coveredBranches[12] = true;
+      localCoveredBranches[12] = true;
       return false;
     }
+    coveredBranches[13] = true;
+    localCoveredBranches[13] = true;
+    
+    //for tracking of individual test cases coverage
+    //System.out.println(Arrays.toString(localCoveredBranches));
     return true;
   }
 
