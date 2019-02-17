@@ -41,6 +41,15 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Test case to test the functions of {@link PersonRepository}, beside the CRUD functions, the query
  * by {@link org.springframework.data.jpa.domain.Specification} are also test.
+ *
+ * Previously tested requirements of Person.equals() (Coverage 24%) :
+ * -
+ Previously untested but now tested requirements of Person.equals() (Coverage 100%):
+ * - Compares identity
+ * - If the input object is Null
+ * - If the input object is not of class Person
+ * - Compares firstName, lastName and address (both positive and negative tests)
+ * - If firstName, lastName or address is Null (edited)
  */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = { "classpath:applicationContext.xml" })
@@ -117,50 +126,60 @@ public class RepositoryTest {
     assertEquals(terry, actual);
   }
 
+  /**
+   * Tests positive instances for method Person.equals()
+   */
   @Test
   public void testEqualsPositive() {
+    //Comparision with self
     Person p1 = new Person("John", "Johnsson", 20);
     assertTrue(p1.equals(p1));
 
+    //Comparision with other equal object
     Person p2 = new Person("John", "Johnsson", 20);
     assertTrue(p1.equals(p2));
 
-    //No names for both persons
+    //Two Person-objects with no names
     p1.setName(null);
     p2.setName(null);
     assertTrue(p1.equals(p2));
 
     p1.setName("John");
     p2.setName("John");
+    //Two Person-objects with no surnames
     p1.setSurname(null);
     p2.setSurname(null);
     assertTrue(p1.equals(p2));
   }
 
+  /**
+   * Tests negative instances for method Person.equals()
+   */
   @Test
   public void testEqualsNegative() {
 
-    //Different first name
+    //Different first names
     Person p1 = new Person("John", "Johnsson", 20);
     Person p2 = new Person("Eric", "Johnsson", 20);
     assertFalse(p1.equals(p2));
 
-    //Different surname
+    //Different surnames
     p1 = new Person("John", "Johnsson", 20);
     p2 = new Person("John", "Ericsson", 20);
     assertFalse(p1.equals(p2));
 
-    //Different age
+    //Different ages
     p1 = new Person("John", "Johnsson", 20);
     p2 = new Person("John", "Johnsson", 21);
     assertFalse(p1.equals(p2));
 
-    //Different id
+    //One person has id, not the other
     p2 = new Person("John", "Johnsson", 20);
     p1.setId((long) 1);
     assertFalse(p1.equals(p2));
     assertFalse(p2.equals(p1));
 
+    //Different ids
     p2.setId((long) 2);
     assertFalse(p1.equals(p2));
 
@@ -187,7 +206,7 @@ public class RepositoryTest {
     //null-comparision
     assertFalse(p1.equals(null));
 
-    //Other class comparision
+    //Comparision with object from other class
     int notAPerson = 1;
     assertFalse(p2.equals(notAPerson));
 
