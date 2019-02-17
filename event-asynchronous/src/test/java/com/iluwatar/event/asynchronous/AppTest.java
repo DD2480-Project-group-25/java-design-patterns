@@ -54,7 +54,6 @@ public class AppTest {
       } else if (i == App.coverage.length - 1) {
         System.out.print(App.INTERACTIVEMODE_CONDS[i] + " is " + App.coverage[i]);
       }
-      App.coverage[i] = false;
     }
     System.out.println("]");
     Arrays.fill(App.coverage, false);
