@@ -129,118 +129,135 @@ public class LambdaInfo implements Serializable {
 
   @Override
   public boolean equals(Object o) {
+    boolean validObj = true;
+    boolean sameClass = true;
     coverage[36] = true;
     if (this == o) {
       coverage[0] = true;
-      return true;
     } else {
       coverage[1] = true;
     }
     if (o == null || getClass() != o.getClass()) {
       if (o == null) {
         coverage[2] = true;
+        validObj = false;
       } else {
         coverage[3] = true;
         coverage[4] = true;
+        sameClass = false;
       }
-      return false;
     } else {
       coverage[5] = true;
     }
 
+    if (validObj && sameClass) {
+      LambdaInfo that1 = (LambdaInfo) o;
+
+      if (awsRequestId != null) {
+        coverage[6] = true;
+        if (!awsRequestId.equals(that1.awsRequestId)) {
+          coverage[7] = true;
+        } else {
+          coverage[8] = true;
+        }
+      } else if (that1.awsRequestId != null) {
+        coverage[9] = true;
+      } else {
+        coverage[10] = true;
+      }
+
+      if (logGroupName != null) {
+        coverage[11] = true;
+        if (!logGroupName.equals(that1.logGroupName)) {
+          coverage[12] = true;
+        } else {
+          coverage[13] = true;
+        }
+      } else if (that1.logGroupName != null) {
+        coverage[14] = true;
+      } else {
+        coverage[15] = true;
+      }
+
+      if (logStreamName != null) {
+        coverage[16] = true;
+        if (!logStreamName.equals(that1.logStreamName)) {
+          coverage[17] = true;
+        } else {
+          coverage[18] = true;
+        }
+      } else if (that1.logStreamName != null) {
+        coverage[19] = true;
+      } else {
+        coverage[20] = true;
+      }
+
+      if (functionName != null) {
+        coverage[21] = true;
+        if (!functionName.equals(that1.functionName)) {
+          coverage[22] = true;
+        } else {
+          coverage[23] = true;
+        }
+      } else if (that1.functionName != null) {
+        coverage[24] = true;
+      } else {
+        coverage[25] = true;
+      }
+
+      if (functionVersion != null) {
+        coverage[26] = true;
+        if (!functionVersion.equals(that1.functionVersion)) {
+          coverage[27] = true;
+        } else {
+          coverage[28] = true;
+        }
+      } else if (that1.functionVersion != null) {
+        coverage[29] = true;
+      } else {
+        coverage[30] = true;
+      }
+
+      if (memoryLimitInMb != null) {
+        coverage[31] = true;
+        if (memoryLimitInMb.equals(that1.memoryLimitInMb)) {
+          coverage[32] = true;
+        } else {
+          coverage[33] = true;
+        }
+      } else if (that1.memoryLimitInMb == null) {
+        coverage[34] = true;
+      } else {
+        coverage[35] = true;
+      }
+    }
+
+
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
     LambdaInfo that = (LambdaInfo) o;
 
-    if (awsRequestId != null) {
-      coverage[6] = true;
-      if (!awsRequestId.equals(that.awsRequestId)) {
-        coverage[7] = true;
-        return false;
-      } else {
-        coverage[8] = true;
-      }
-    } else if (that.awsRequestId != null) {
-      coverage[9] = true;
+    if (awsRequestId != null ? !awsRequestId.equals(that.awsRequestId) : that.awsRequestId != null) {
       return false;
-    } else {
-      coverage[10] = true;
     }
-
-    if (logGroupName != null) {
-      coverage[11] = true;
-      if (!logGroupName.equals(that.logGroupName)) {
-        coverage[12] = true;
-        return false;
-      } else {
-        coverage[13] = true;
-      }
-    } else if (that.logGroupName != null) {
-      coverage[14] = true;
+    if (logGroupName != null ? !logGroupName.equals(that.logGroupName) : that.logGroupName != null) {
       return false;
-    } else {
-      coverage[15] = true;
     }
-
-    if (logStreamName != null) {
-      coverage[16] = true;
-      if (!logStreamName.equals(that.logStreamName)) {
-        coverage[17] = true;
-        return false;
-      } else {
-        coverage[18] = true;
-      }
-    } else if (that.logStreamName != null) {
-      coverage[19] = true;
+    if (logStreamName != null ? !logStreamName.equals(that.logStreamName) : that.logStreamName != null) {
       return false;
-    } else {
-      coverage[20] = true;
     }
-
-    if (functionName != null) {
-      coverage[21] = true;
-      if (!functionName.equals(that.functionName)) {
-        coverage[22] = true;
-        return false;
-      } else {
-        coverage[23] = true;
-      }
-    } else if (that.functionName != null) {
-      coverage[24] = true;
+    if (functionName != null ? !functionName.equals(that.functionName) : that.functionName != null) {
       return false;
-    } else {
-      coverage[25] = true;
     }
-
-    if (functionVersion != null) {
-      coverage[26] = true;
-      if (!functionVersion.equals(that.functionVersion)) {
-        coverage[27] = true;
-        return false;
-      } else {
-        coverage[28] = true;
-      }
-    } else if (that.functionVersion != null) {
-      coverage[29] = true;
+    if (functionVersion != null ? !functionVersion.equals(that.functionVersion) : that.functionVersion != null) {
       return false;
-    } else {
-      coverage[30] = true;
     }
-
-    if (memoryLimitInMb != null) {
-      coverage[31] = true;
-      if (memoryLimitInMb.equals(that.memoryLimitInMb)) {
-        coverage[32] = true;
-        return true;
-      } else {
-        coverage[33] = true;
-        return false;
-      }
-    } else if (that.memoryLimitInMb == null) {
-      coverage[34] = true;
-      return true;
-    } else {
-      coverage[35] = true;
-    }
-    return false;
+    return memoryLimitInMb != null ? memoryLimitInMb.equals(that.memoryLimitInMb) : that.memoryLimitInMb == null;
   }
 
   @Override
