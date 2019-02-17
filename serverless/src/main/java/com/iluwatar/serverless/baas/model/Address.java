@@ -116,16 +116,18 @@ public class Address implements Serializable {
       localBranches[6] = true;
       if (!addressLineOne.equals(address.addressLineOne)) {
         localBranches[7] = true;
-        return false;
       }
       localBranches[8] = true;
     } else {
       localBranches[9] = true;
       if (address.addressLineOne != null) {
         localBranches[10] = true;
-        return false;
       }
       localBranches[11] = true;
+    }
+    if (addressLineOne != null ? !addressLineOne.equals(address.addressLineOne) :
+        address.addressLineOne != null) {
+      return false;
     }
 
     //Expanded ternary
@@ -133,23 +135,24 @@ public class Address implements Serializable {
       localBranches[12] = true;
       if (!addressLineTwo.equals(address.addressLineTwo)) {
         localBranches[13] = true;
-        return false;
       }
       localBranches[14] = true;
     } else {
       localBranches[15] = true;
       if (address.addressLineTwo != null) {
         localBranches[16] = true;
-        return false;
       }
       localBranches[17] = true;
+    }
+    if (addressLineTwo != null ? !addressLineTwo.equals(address.addressLineTwo) :
+        address.addressLineTwo != null) {
+      return false;
     }
 
     if (city != null) {
       localBranches[18] = true;
       if (!city.equals(address.city)) {
         localBranches[19] = true;
-        return false;
       } else {
         localBranches[20] = true;
       }
@@ -157,17 +160,18 @@ public class Address implements Serializable {
       localBranches[21] = true;
       if (address.city != null) {
         localBranches[22] = true;
-        return false;
       } else {
         localBranches[23] = true;
       }
+    }
+    if (city != null ? !city.equals(address.city) : address.city != null) {
+      return false;
     }
 
     if (state != null) {
       localBranches[24] = true;
       if (!state.equals(address.state)) {
         localBranches[25] = true;
-        return false;
       } else {
         localBranches[26] = true;
       }
@@ -175,19 +179,21 @@ public class Address implements Serializable {
       localBranches[27] = true;
       if (address.state != null) {
         localBranches[28] = true;
-        return false;
       } else {
         localBranches[29] = true;
       }
     }
+    if (state != null ? !state.equals(address.state) : address.state != null) {
+      return false;
+    }
 
     if (zipCode != null) {
       localBranches[30] = true;
-      return zipCode.equals(address.zipCode);
     } else {
       localBranches[31] = true;
-      return address.zipCode == null;
     }
+
+    return zipCode != null ? zipCode.equals(address.zipCode) : address.zipCode == null;
   }
 
   @Override
