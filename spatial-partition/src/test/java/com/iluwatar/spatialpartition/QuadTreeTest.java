@@ -25,15 +25,50 @@ package com.iluwatar.spatialpartition;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Random;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Testing QuadTree class.
  */
 
 class QuadTreeTest {
+
+  @BeforeAll
+  public static void setCoveredBranches() {
+    QuadTree.coveredBranches = new boolean[8];
+    QuadTree.localCoveredBranches = new boolean[8];
+  }
+
+  @AfterAll
+    public static void printCoveredBranches() {
+    System.out.println(Arrays.toString(QuadTree.coveredBranches));
+    int count = 0;
+    for (int i = 0 ; i < QuadTree.coveredBranches.length; i++) {
+      if (QuadTree.coveredBranches[i]) {
+        count++;
+      }
+    }
+    float fraction = (float) count / QuadTree.coveredBranches.length;
+    System.out.println("\n" + fraction * 100 + "% branch coverage\n");
+  }
+
+  @BeforeEach
+  public void initLocalCoveredBranches() {
+    Arrays.fill(QuadTree.localCoveredBranches, false);
+  }
+
+  @AfterEach
+  public void addCoveredBranches() {
+    for (int i = 0 ; i < QuadTree.coveredBranches.length ; i++) {
+      if (QuadTree.localCoveredBranches[i]) {
+        QuadTree.coveredBranches[i] = true;
+      }
+    }
+  }
 
   @Test
   void queryTest() {
