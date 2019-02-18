@@ -23,6 +23,7 @@
 package com.iluwatar.serverless.faas;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Lambda context information
@@ -109,22 +110,49 @@ public class LambdaInfo implements Serializable {
 
     LambdaInfo that = (LambdaInfo) o;
 
-    if (awsRequestId != null ? !awsRequestId.equals(that.awsRequestId) : that.awsRequestId != null) {
+    if (!Objects.equals(awsRequestId, that.awsRequestId)) {
       return false;
     }
-    if (logGroupName != null ? !logGroupName.equals(that.logGroupName) : that.logGroupName != null) {
+    if (!logEquals(that)) {
       return false;
     }
-    if (logStreamName != null ? !logStreamName.equals(that.logStreamName) : that.logStreamName != null) {
+    if (!funcEquals(that)) {
       return false;
     }
-    if (functionName != null ? !functionName.equals(that.functionName) : that.functionName != null) {
+    if (!Objects.equals(memoryLimitInMb, that.memoryLimitInMb)) {
       return false;
     }
-    if (functionVersion != null ? !functionVersion.equals(that.functionVersion) : that.functionVersion != null) {
+    return true;
+  }
+
+  /**
+   * Checks that logGroupName and logStreamName are equal
+   * @param other LambdaInfo to be compared
+   * @return true if logGroupName and logStreamName are equal
+   */
+  private boolean logEquals(LambdaInfo other) {
+    if (!Objects.equals(logGroupName, other.logGroupName)) {
       return false;
     }
-    return memoryLimitInMb != null ? memoryLimitInMb.equals(that.memoryLimitInMb) : that.memoryLimitInMb == null;
+    if (!Objects.equals(logStreamName, other.logStreamName)) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Checks that functionName and functionVersion are equal
+   * @param other LambdaInfo to be compared
+   * @return true if functionName and functionVersion are equal
+   */
+  private boolean funcEquals(LambdaInfo other) {
+    if (!Objects.equals(functionName, other.functionName)) {
+      return false;
+    }
+    if (!Objects.equals(functionVersion, other.functionVersion)) {
+      return false;
+    }
+    return true;
   }
 
   @Override
