@@ -27,15 +27,27 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 
  * Unit tests for {@link LotteryNumbers}
  *
+ * Test class containing tests to increase the coverage
+ * of LotteryNumbers.equals method.
+ *
+ * Previously tested requirements of LotteryNumbers.equals() (Coverage 50%) :
+ * -Compares two LotteryNumbers (both positive and negative tests)
+ *
+ * Previously untested but now tested requirements of LotteryNumbers.equals() (Coverage 75%):
+ * - Compares identity
+ * - If the input object is Null
+ * - If the input object is not of class LotteryNumbers
+ *
+ * It is not possible to get 100% coverage for LotteryNumbers.equals because there are 3 branches
+ * that can only be covered when LotteryNumbers.numbers = null, however there is no way of creating
+ * a LotteryNumbers with numbers = null inside the test class
+ * since LotteryNumbers has private constructors and numbers is a private set.
  */
 class LotteryNumbersTest {
   
@@ -73,5 +85,35 @@ class LotteryNumbersTest {
     LotteryNumbers numbers3 = LotteryNumbers.create(
             new HashSet<>(Arrays.asList(11, 12, 13, 14)));
     assertNotEquals(numbers1, numbers3);
+  }
+
+  /**
+   * Test that equals() returns true when comparing the same object.
+   */
+  @Test
+  public void testEqualsSameObject() {
+    LotteryNumbers n =  LotteryNumbers.create(
+        new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    assertTrue(n.equals(n));
+  }
+  /**
+   * Test equals() where the input object is not of class LotteryNumbers.
+   */
+  @Test
+  public void testDifferentClass() {
+    LotteryNumbers n1 = LotteryNumbers.create(
+        new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    String n2 = "H";
+    assertFalse(n1.equals(n2));
+  }
+
+  /**
+   * Test equals() with a null object as input.
+   */
+  @Test
+  public void testEqualsNullObject() {
+    LotteryNumbers n1 = LotteryNumbers.createRandom();
+    LotteryNumbers n2 = null;
+    assertFalse(n1.equals(n2));
   }
 }
