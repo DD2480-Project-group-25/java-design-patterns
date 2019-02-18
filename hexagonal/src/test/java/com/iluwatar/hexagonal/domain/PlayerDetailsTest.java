@@ -58,7 +58,7 @@ class PlayerDetailsTest {
     }
     if (verbose) {
       for (int i = 0; i < PlayerDetails.visitedBranchLocal.length; i++) {
-        System.out.format("Branch %d covered: %b.\n", i, PlayerDetails.visitedBranchLocal[i]);
+        System.out.format("Branch %d covered: %b.\n", i + 1, PlayerDetails.visitedBranchLocal[i]);
       }
     }
   }
@@ -67,7 +67,7 @@ class PlayerDetailsTest {
   public static void afterAll() {
     int cover = 0;
     for (int i = 0; i < PlayerDetails.visitedBranchGlobal.length; i++) {
-      System.out.format("Branch %d covered: %b.\n", i, PlayerDetails.visitedBranchGlobal[i]);
+      System.out.format("Branch %d covered: %b.\n", i + 1, PlayerDetails.visitedBranchGlobal[i]);
       if (PlayerDetails.visitedBranchGlobal[i]) {
         cover++;
       }
