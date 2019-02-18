@@ -116,27 +116,4 @@ class LotteryNumbersTest {
     LotteryNumbers n2 = null;
     assertFalse(n1.equals(n2));
   }
-
-  /**
-   * Test equals() two LotteryNumbers have different numbers.
-   */
-  @Test
-  public void testDifferentNumbers() {
-    LotteryNumbers n1 = LotteryNumbers.create(
-        new HashSet<>(Arrays.asList(2, 2, 2, 2)));
-    LotteryNumbers n2 = LotteryNumbers.create(
-        new HashSet<>(Arrays.asList(1, 2, 3, 4)));
-    assertFalse(n1.equals(n2));
-  }
-  /**
-   * Test equals() two LotteryNumbers have the same numbers.
-   */
-  @Test
-  public void testSameNumbers() {
-    LotteryNumbers n1 = LotteryNumbers.create(
-        new HashSet<>(Arrays.asList(2, 2, 2, 2)));
-    LotteryNumbers n2 = LotteryNumbers.create(
-        new HashSet<>(Arrays.asList(2, 2, 2, 2)));
-    assertTrue(n1.equals(n2));
-  }
 }
