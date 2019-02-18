@@ -28,6 +28,8 @@ package com.iluwatar.hexagonal.domain;
  *
  */
 public class LotteryTicket {
+  static boolean[] globalCoverage;
+  static boolean[] localCoverage;
 
   private LotteryTicketId id;
   private final PlayerDetails playerDetails;
@@ -87,29 +89,44 @@ public class LotteryTicket {
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
+      localCoverage[0] = true;
       return true;
     }
+    localCoverage[1] = true;
     if (obj == null) {
+      localCoverage[2] = true;
       return false;
     }
+    localCoverage[3] = true;
     if (getClass() != obj.getClass()) {
+      localCoverage[4] = true;
       return false;
     }
+    localCoverage[5] = true;
     LotteryTicket other = (LotteryTicket) obj;
     if (lotteryNumbers == null) {
+      localCoverage[6] = true;
       if (other.lotteryNumbers != null) {
+        localCoverage[7] = true;
         return false;
       }
+      localCoverage[8] = true;
     } else if (!lotteryNumbers.equals(other.lotteryNumbers)) {
+      localCoverage[9] = true;
       return false;
     }
     if (playerDetails == null) {
+      localCoverage[10] = true;
       if (other.playerDetails != null) {
+        localCoverage[11] = true;
         return false;
       }
+      localCoverage[12] = true;
     } else if (!playerDetails.equals(other.playerDetails)) {
+      localCoverage[13] = true;
       return false;
     }
+    localCoverage[14] = true;
     return true;
   }
 }
