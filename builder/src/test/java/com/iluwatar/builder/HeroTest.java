@@ -22,7 +22,13 @@
  */
 package com.iluwatar.builder;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.text.DecimalFormat;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,10 +37,72 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Date: 12/6/15 - 11:01 PM
  *
+ * Previously tested requirements of Hero.equals() (Coverage 86%) :
+ * - Hero has armor, weapon, hair type and hair color
+ * - Hero has no armor
+ * - In external tests existing hairType and hairType == BALD has been tested
+ * Previously untested but now tested requirements of Hero.equals() (Coverage 100%):
+ * - Hero has no hair type or hair color
+ * - Hero has no weapon
+ *
  * @author Jeroen Meulemeester
  */
 public class HeroTest {
 
+  @BeforeAll
+  public static void setupCoverage() {
+    Hero.coverage = new boolean[13];
+    Hero.totalCoverage = new boolean[13];
+  }
+
+  /**
+   * Print coverage and empty array
+   */
+  @AfterEach
+  public void printAndCleanCoverage() {
+    // If default is false, method has not been run, don't print
+    if (Hero.coverage[12] == false) {
+      return;
+    }
+
+    System.out.print("[");
+    for (int i = 0; i < Hero.coverage.length; i++) {
+      if (Hero.coverage[i] || Hero.totalCoverage[i]) {
+        Hero.totalCoverage[i] = true;
+      }
+      if (i < Hero.coverage.length - 1) {
+        System.out.print(Hero.CONDS[i] + " is " + Hero.coverage[i] + ", ");
+      } else if (i == Hero.coverage.length - 1) {
+        System.out.print(Hero.CONDS[i] + " is " + Hero.coverage[i]);
+      }
+    }
+    System.out.println("]");
+    Arrays.fill(Hero.coverage, false);
+  }
+
+  /**
+   * Print total coverage
+   */
+  @AfterAll
+  public static void printCoverage() {
+    System.out.println();
+    System.out.println("Total coverage:");
+    double coveredConds = 0;
+    for (int i = 0; i < Hero.totalCoverage.length - 1; i++) {
+      if (Hero.totalCoverage[i]) {
+        System.out.println(Hero.CONDS[i] + " has been covered");
+        coveredConds++;
+      } else {
+        System.out.println(Hero.CONDS[i] + " has not been covered");
+      }
+    }
+    DecimalFormat df = new DecimalFormat("###.#");
+    System.out.println("Covered " +
+        df.format(((coveredConds + 1)/Hero.totalCoverage.length)*100)
+        + "% of all conditions");
+    System.out.println();
+
+  }
   /**
    * Test if we get the expected exception when trying to create a hero without a profession
    */
@@ -73,7 +141,38 @@ public class HeroTest {
     assertEquals(Weapon.SWORD, hero.getWeapon());
     assertEquals(HairType.LONG_CURLY, hero.getHairType());
     assertEquals(HairColor.BLOND, hero.getHairColor());
-
   }
 
+  /**
+   *Test correct toString method when hero has no hair type or color.
+   */
+  @Test
+  public void testHeroToStringNoHairTypeNoHairColor() {
+    final String heroName = "Hero Test";
+    final Hero hero = new Hero.Builder(Profession.PRIEST, heroName)
+        .withArmor(Armor.LEATHER)
+        .withWeapon(Weapon.BOW)
+        .build();
+
+    String heroToString = hero.toString();
+    assertEquals("This is a priest named Hero Test wearing leather and "
+        + "wielding a bow.", heroToString);
+  }
+
+  /**
+   * Test correct toString when hero has no weapon.
+   */
+  @Test
+  public void testHeroToStringNoWeapon() {
+    final String heroName = "Hero Test";
+    final Hero hero = new Hero.Builder(Profession.THIEF, heroName)
+        .withArmor(Armor.CLOTHES)
+        .withHairColor(HairColor.WHITE)
+        .withHairType(HairType.SHORT)
+        .build();
+
+    String heroToString = hero.toString();
+    assertEquals("This is a thief named Hero Test with white short hair"
+        + " wearing clothes.", heroToString);
+  }
 }

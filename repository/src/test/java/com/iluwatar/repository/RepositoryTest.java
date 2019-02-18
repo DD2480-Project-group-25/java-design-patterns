@@ -22,31 +22,52 @@
  */
 package com.iluwatar.repository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.google.common.collect.Lists;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * Test case to test the functions of {@link PersonRepository}, beside the CRUD functions, the query
  * by {@link org.springframework.data.jpa.domain.Specification} are also test.
+ *
+ * Previously tested requirements of Person.equals() (Coverage 24%) :
+ * - Comparision of age.
+ * - Positive instance, when compared objects are equal.
+ Previously untested but now tested requirements of Person.equals() (Coverage 100%):
+ * - Positive instances:
+ *    - Compare object to self.
+ *    - Compare equal objects that don't have first names or surnames.
+ * - Negative instances:
+ *    - Compare non-equal first names, surnames and id's.
+ *    - Compare if one Person-object's first name, surname or id is null.
+ *    - If input object is null.
+ *    - If the input object is not of class Person.
  */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = { "classpath:applicationContext.xml" })
 public class RepositoryTest {
+
+  @BeforeAll
+  public static void setCoveredBranches() {
+    Person.coveredBranches = new boolean[14];
+    Person.localCoveredBranches = new boolean[14];
+  }
+
+  @BeforeEach
+  public void resetLocalCoveredBranches() {
+    Arrays.fill(Person.localCoveredBranches, false);
+  }
 
   @Resource
   private PersonRepository repository;
@@ -119,10 +140,128 @@ public class RepositoryTest {
     assertEquals(terry, actual);
   }
 
+  /**
+   * Tests positive instances for method Person.equals()
+   */
+  @Test
+  public void compareToSelf() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    assertTrue(p1.equals(p1));
+  }
+
+  @Test
+  public void testEqualNullNames() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Johnsson", 20);
+    p1.setName(null);
+    p2.setName(null);
+    assertTrue(p1.equals(p2));
+  }
+
+  @Test
+  public void testEqualNullSurnames() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Johnsson", 20);
+    p1.setSurname(null);
+    p2.setSurname(null);
+    assertTrue(p1.equals(p2));
+  }
+
+  /**
+   * Tests negative instances for method Person.equals()
+   */
+  @Test
+  public void testDifferentNames() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("Eric", "Johnsson", 20);
+    assertFalse(p1.equals(p2));
+  }
+
+  @Test
+  public void testDifferentSurnames() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Ericsson", 20);
+    assertFalse(p1.equals(p2));
+  }
+
+  @Test
+  public void testNoId() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Johnsson", 20);
+    p1.setId((long) 1);
+    assertFalse(p1.equals(p2));
+    assertFalse(p2.equals(p1));
+  }
+
+  @Test
+  public void testDifferentIds() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Johnsson", 20);
+    p2.setId((long) 2);
+    assertFalse(p1.equals(p2));
+  }
+
+  @Test
+  public void testNameIsNull() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Johnsson", 20);
+    p1.setName(null);
+    assertFalse(p1.equals(p2));
+    assertFalse(p2.equals(p1));
+  }
+
+  @Test
+  public void testSurnameIsNull() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    Person p2 = new Person("John", "Johnsson", 20);
+    p1.setSurname(null);
+    assertFalse(p1.equals(p2));
+    assertFalse(p2.equals(p1));
+  }
+
+  @Test
+  public void testObjectIsNull() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    assertFalse(p1.equals(null));
+  }
+
+  @Test
+  public void testNonPersonObject() {
+    Person p1 = new Person("John", "Johnsson", 20);
+    int notAPerson = 1;
+    assertFalse(p1.equals(notAPerson));
+  }
+
   @AfterEach
   public void cleanup() {
-
     repository.deleteAll();
   }
 
+  /**
+   * Adding locally covered branches to list of total covered branches.
+   */
+  @AfterEach
+  public void addCoveredBranches() {
+    for (int i = 0 ; i < Person.coveredBranches.length ; i++) {
+      if (Person.localCoveredBranches[i]) {
+        Person.coveredBranches[i] = true;
+      }
+    }
+  }
+
+  /**
+   * Checks coverage and prints out result.
+   */
+  @AfterAll
+  public static void printCoveredBranches() {
+    System.out.println(Arrays.toString(Person.coveredBranches));
+    int count = 0;
+    for (int i = 0 ; i < Person.coveredBranches.length; i++) {
+      if (Person.coveredBranches[i]) {
+        count++;
+      }
+    }
+    float fraction = (float) count / Person.coveredBranches.length;
+    System.out.println("\n" + fraction * 100 + "% branch coverage\n");
+  }
 }

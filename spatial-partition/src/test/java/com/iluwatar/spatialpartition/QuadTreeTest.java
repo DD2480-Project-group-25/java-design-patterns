@@ -25,15 +25,67 @@ package com.iluwatar.spatialpartition;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Random;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Testing QuadTree class.
+ * Previously tested requirements of QuadTree.insert() (Coverage 86%) :
+ * - Checking that points inserted within the field can be found in the right spot.
+ Previously untested but now tested requirements of Person.equals() (Coverage 93%):
+ * - Checking that points inserted outside the field can't be found.
  */
-
 class QuadTreeTest {
+
+  @BeforeAll
+  public static void setCoveredBranches() {
+    QuadTree.coveredBranches = new boolean[8];
+    QuadTree.localCoveredBranches = new boolean[8];
+  }
+
+  @AfterAll
+  public static void printCoveredBranches() {
+    System.out.println(Arrays.toString(QuadTree.coveredBranches));
+    int count = 0;
+    for (int i = 0 ; i < QuadTree.coveredBranches.length; i++) {
+      if (QuadTree.coveredBranches[i]) {
+        count++;
+      }
+    }
+    float fraction = (float) count / QuadTree.coveredBranches.length;
+    System.out.println("\n" + fraction * 100 + "% branch coverage\n");
+  }
+
+  @BeforeEach
+  public void initLocalCoveredBranches() {
+    Arrays.fill(QuadTree.localCoveredBranches, false);
+  }
+
+  @AfterEach
+  public void addCoveredBranches() {
+    for (int i = 0 ; i < QuadTree.coveredBranches.length ; i++) {
+      if (QuadTree.localCoveredBranches[i]) {
+        QuadTree.coveredBranches[i] = true;
+      }
+    }
+  }
+
+  /**
+   * Test that point outside of field area is not inserted into the tree.
+   * Covers the case when QuadTree.insert() should return and stop recursive tree search.
+   */
+  @Test
+  void testPointOutsideField() {
+    Rect field = new Rect(150,150,300,300); //size of field
+    ArrayList<Point> points = new ArrayList<Point>();
+    Bubble p = new Bubble(1000, 1000, 1,1);
+    points.add(p);
+    Rect queryRange = new Rect(150,150,300,300); //result = all points lying in this rectangle
+    assertNull(QuadTreeTest.quadTreeTest(points, field, queryRange).get(1));
+  }
 
   @Test
   void queryTest() {

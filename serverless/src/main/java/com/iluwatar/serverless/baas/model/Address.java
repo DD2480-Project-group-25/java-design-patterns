@@ -33,6 +33,8 @@ import java.io.Serializable;
  */
 @DynamoDBDocument
 public class Address implements Serializable {
+  static boolean[] globalBranches;
+  static boolean[] localBranches;
 
   private static final long serialVersionUID = 6760844284799736970L;
 
@@ -90,31 +92,107 @@ public class Address implements Serializable {
   @Override
   public boolean equals(Object o) {
     if (this == o) {
+      localBranches[0] = true;
       return true;
     }
+    localBranches[1] = true;
 
     if (o == null || getClass() != o.getClass()) {
+      if (o == null && getClass() != o.getClass()) {
+        localBranches[2] = true; //Can never happen
+      } else if(o == null) {
+        localBranches[3] = true;
+      } else if (getClass() != o.getClass()) {
+        localBranches[4] = true;
+      }
       return false;
     }
+    localBranches[5] = true;
 
     Address address = (Address) o;
 
+    //Expanded ternary
+    if (addressLineOne != null) {
+      localBranches[6] = true;
+      if (!addressLineOne.equals(address.addressLineOne)) {
+        localBranches[7] = true;
+      }
+      localBranches[8] = true;
+    } else {
+      localBranches[9] = true;
+      if (address.addressLineOne != null) {
+        localBranches[10] = true;
+      }
+      localBranches[11] = true;
+    }
     if (addressLineOne != null ? !addressLineOne.equals(address.addressLineOne) :
         address.addressLineOne != null) {
       return false;
     }
 
+    //Expanded ternary
+    if (addressLineTwo != null) {
+      localBranches[12] = true;
+      if (!addressLineTwo.equals(address.addressLineTwo)) {
+        localBranches[13] = true;
+      }
+      localBranches[14] = true;
+    } else {
+      localBranches[15] = true;
+      if (address.addressLineTwo != null) {
+        localBranches[16] = true;
+      }
+      localBranches[17] = true;
+    }
     if (addressLineTwo != null ? !addressLineTwo.equals(address.addressLineTwo) :
         address.addressLineTwo != null) {
       return false;
     }
 
+    if (city != null) {
+      localBranches[18] = true;
+      if (!city.equals(address.city)) {
+        localBranches[19] = true;
+      } else {
+        localBranches[20] = true;
+      }
+    } else {
+      localBranches[21] = true;
+      if (address.city != null) {
+        localBranches[22] = true;
+      } else {
+        localBranches[23] = true;
+      }
+    }
     if (city != null ? !city.equals(address.city) : address.city != null) {
       return false;
+    }
+
+    if (state != null) {
+      localBranches[24] = true;
+      if (!state.equals(address.state)) {
+        localBranches[25] = true;
+      } else {
+        localBranches[26] = true;
+      }
+    } else {
+      localBranches[27] = true;
+      if (address.state != null) {
+        localBranches[28] = true;
+      } else {
+        localBranches[29] = true;
+      }
     }
     if (state != null ? !state.equals(address.state) : address.state != null) {
       return false;
     }
+
+    if (zipCode != null) {
+      localBranches[30] = true;
+    } else {
+      localBranches[31] = true;
+    }
+
     return zipCode != null ? zipCode.equals(address.zipCode) : address.zipCode == null;
   }
 
