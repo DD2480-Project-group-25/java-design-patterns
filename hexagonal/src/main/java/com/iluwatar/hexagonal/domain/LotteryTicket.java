@@ -28,8 +28,8 @@ package com.iluwatar.hexagonal.domain;
  *
  */
 public class LotteryTicket {
-  static boolean[] globalCoverage;
-  static boolean[] localCoverage;
+  static boolean[] globalCoverage = new boolean[15];
+  static boolean[] localCoverage = new boolean[15];
 
   private LotteryTicketId id;
   private final PlayerDetails playerDetails;

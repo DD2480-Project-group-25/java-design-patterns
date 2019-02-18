@@ -33,8 +33,8 @@ import java.io.Serializable;
  */
 @DynamoDBDocument
 public class Address implements Serializable {
-  static boolean[] globalBranches;
-  static boolean[] localBranches;
+  static boolean[] globalBranches = new boolean[32];
+  static boolean[] localBranches = new boolean[32];
 
   private static final long serialVersionUID = 6760844284799736970L;
 
@@ -98,9 +98,7 @@ public class Address implements Serializable {
     localBranches[1] = true;
 
     if (o == null || getClass() != o.getClass()) {
-      if (o == null && getClass() != o.getClass()) {
-        localBranches[2] = true; //Can never happen
-      } else if(o == null) {
+      if(o == null) {
         localBranches[3] = true;
       } else if (getClass() != o.getClass()) {
         localBranches[4] = true;
