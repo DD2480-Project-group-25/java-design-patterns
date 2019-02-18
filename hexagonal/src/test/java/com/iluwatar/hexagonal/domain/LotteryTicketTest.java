@@ -29,6 +29,8 @@ import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /*
  * Test requirements documentation
@@ -63,7 +65,7 @@ class LotteryTicketTest {
     LotteryNumbers numbers = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
     LotteryTicket ticket = new LotteryTicket(new LotteryTicketId(), details, numbers);
 
-    assertEquals(ticket, ticket);
+    assertTrue(ticket.equals(ticket));
   }
 
   @Test
@@ -72,7 +74,7 @@ class LotteryTicketTest {
     LotteryNumbers numbers = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
     LotteryTicket ticket = new LotteryTicket(new LotteryTicketId(), details, numbers);
 
-    assertNotEquals(ticket, null);
+    assertFalse(ticket.equals(null));
   }
 
   @Test
@@ -81,7 +83,7 @@ class LotteryTicketTest {
     LotteryNumbers numbers = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
     LotteryTicket ticket = new LotteryTicket(new LotteryTicketId(), details, numbers);
 
-    assertNotEquals(ticket, "");
+    assertFalse(ticket.equals(""));
   }
 
   @Test
@@ -93,7 +95,7 @@ class LotteryTicketTest {
     LotteryNumbers numbers = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
     LotteryTicket ticket2 = new LotteryTicket(new LotteryTicketId(), details2, numbers);
 
-    assertNotEquals(ticket1, ticket2);
+    assertFalse(ticket1.equals(ticket2));
   }
 
   @Test
@@ -104,7 +106,7 @@ class LotteryTicketTest {
     PlayerDetails details2 = new PlayerDetails("elsa@foo.bar", "1223-121212", "+49332322");
     LotteryTicket ticket2 = new LotteryTicket(new LotteryTicketId(), details2, null);
 
-    assertNotEquals(ticket1, ticket2);
+    assertFalse(ticket1.equals(ticket2));
   }
 
   @Test
@@ -116,7 +118,7 @@ class LotteryTicketTest {
     LotteryNumbers numbers2 = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
     LotteryTicket ticket2 = new LotteryTicket(new LotteryTicketId(), details2, numbers2);
 
-    assertNotEquals(ticket1, ticket2);
+    assertFalse(ticket1.equals(ticket2));
   }
 
   @Test
@@ -127,6 +129,6 @@ class LotteryTicketTest {
     LotteryNumbers numbers2 = LotteryNumbers.create(new HashSet<>(Arrays.asList(1, 2, 3, 4)));
     LotteryTicket ticket2 = new LotteryTicket(new LotteryTicketId(), null, numbers2);
 
-    assertEquals(ticket1, ticket2);
+    assertTrue(ticket1.equals(ticket2));
   }
 }
