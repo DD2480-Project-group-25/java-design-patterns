@@ -37,14 +37,17 @@ import static org.junit.jupiter.api.Assertions.*;
  * of LotteryNumbers.equals method.
  *
  * Previously tested requirements of LotteryNumbers.equals() (Coverage 50%) :
- * TBA
+ * -Compares two LotteryNumbers (both positive and negative tests)
  *
- * Previously untested but now tested requirements of LotteryNumbers.equals() (Coverage 100%):
+ * Previously untested but now tested requirements of LotteryNumbers.equals() (Coverage 75%):
  * - Compares identity
  * - If the input object is Null
  * - If the input object is not of class LotteryNumbers
- * - Compares two LotteryNumbers (both positive and negative tests)
  *
+ * It is not possible to get 100% coverage for LotteryNumbers.equals because there are 3 branches
+ * that can only be covered when LotteryNumbers.numbers = null, however there is no way of creating
+ * a LotteryNumbers with numbers = null inside the test class
+ * since LotteryNumbers has private constructors and numbers is a private set.
  */
 class LotteryNumbersTest {
   
