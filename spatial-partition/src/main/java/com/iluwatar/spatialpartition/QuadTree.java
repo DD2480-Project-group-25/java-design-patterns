@@ -24,6 +24,7 @@
 package com.iluwatar.spatialpartition;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -34,6 +35,8 @@ import java.util.Hashtable;
  */
 
 public class QuadTree {
+  static boolean[] localCoveredBranches = new boolean[8];
+  static boolean[] coveredBranches = new boolean[8];
   Rect boundary;
   int capacity;
   boolean divided;
@@ -49,33 +52,43 @@ public class QuadTree {
     this.divided = false;
     this.points = new Hashtable<Integer, Point>();
     this.northwest = null; 
-    this.northeast = null; 
+    this.northeast = null;
     this.southwest = null; 
     this.southeast = null;
   }
 
   void insert(Point p) {
     if (!this.boundary.contains(p)) {
+      localCoveredBranches[0] = true;
       return;
     } else {
       if (this.points.size() < this.capacity) {
+        localCoveredBranches[1] = true;
         points.put(p.id, p);
       } else {
         if (!this.divided) {
+          localCoveredBranches[2] = true;
           this.divide();
         }
 
         if (this.northwest.boundary.contains(p)) {
+          localCoveredBranches[3] = true;
           this.northwest.insert(p);
         } else if (this.northeast.boundary.contains(p)) {
+          localCoveredBranches[4] = true;
           this.northeast.insert(p);
         } else if (this.southwest.boundary.contains(p)) {
+          localCoveredBranches[5] = true;
           this.southwest.insert(p);
         } else if (this.southeast.boundary.contains(p)) {
+          localCoveredBranches[6] = true;
           this.southeast.insert(p);
         }
       }
+      localCoveredBranches[7] = true;
     }
+    //For checking what branches are missed in individual test cases
+    //System.out.println(Arrays.toString(localCoveredBranches));
   }
 
   void divide() {

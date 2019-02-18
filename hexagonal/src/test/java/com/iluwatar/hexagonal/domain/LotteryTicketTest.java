@@ -22,9 +22,11 @@
  */
 package com.iluwatar.hexagonal.domain;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,6 +45,42 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  * Test Lottery Tickets for equality
  */
 class LotteryTicketTest {
+  private static final int BRANCHES = 15;
+
+  private static void printInformation(String context, boolean[] coverage) {
+    int covered = 0;
+    for(boolean branch : coverage) {
+      covered += branch ? 1 : 0;
+    }
+    int total = coverage.length;
+
+    double shareCovered = ((double) covered) / ((double) total) * 100;
+
+    System.out.printf("%d/%d (%6.2f%%) branches covered [%s]\n", covered, total, shareCovered, context);
+  }
+
+  @BeforeAll
+  static void beforeAll() {
+    LotteryTicket.globalCoverage = new boolean[BRANCHES];
+  }
+
+  @BeforeEach
+  void beforeEach() {
+    LotteryTicket.localCoverage = new boolean[BRANCHES];
+  }
+
+  @AfterEach
+  void afterEach(TestInfo info) {
+    for (int i = 0; i < BRANCHES; i++) {
+      LotteryTicket.globalCoverage[i] = LotteryTicket.globalCoverage[i] || LotteryTicket.localCoverage[i];
+    }
+    printInformation(info.getDisplayName(), LotteryTicket.localCoverage);
+  }
+
+  @AfterAll
+  static void afterAll() {
+    printInformation("All tests", LotteryTicket.globalCoverage);
+  }
 
   @Test
   void testEquals() {

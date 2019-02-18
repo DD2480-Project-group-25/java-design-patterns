@@ -25,6 +25,7 @@ package com.iluwatar.repository;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Arrays;
 
 /**
  * 
@@ -41,6 +42,8 @@ public class Person {
   private String surname;
 
   private int age;
+  static boolean[] coveredBranches = new boolean[14];
+  static boolean[] localCoveredBranches = new boolean[14];
 
   public Person() {
   }
@@ -105,40 +108,58 @@ public class Person {
 
   @Override
   public boolean equals(Object obj) {
+
     if (this == obj) {
+      localCoveredBranches[0] = true;
       return true;
     }
     if (obj == null) {
+      localCoveredBranches[1] = true;
       return false;
     }
     if (getClass() != obj.getClass()) {
+      localCoveredBranches[2] = true;
       return false;
     }
     Person other = (Person) obj;
     if (age != other.age) {
+      localCoveredBranches[3] = true;
       return false;
     }
     if (id == null) {
+      localCoveredBranches[4] = true;
       if (other.id != null) {
+        localCoveredBranches[5] = true;
         return false;
       }
     } else if (!id.equals(other.id)) {
+      localCoveredBranches[6] = true;
       return false;
     }
     if (name == null) {
+      localCoveredBranches[7] = true;
       if (other.name != null) {
+        localCoveredBranches[8] = true;
         return false;
       }
     } else if (!name.equals(other.name)) {
+      localCoveredBranches[9] = true;
       return false;
     }
     if (surname == null) {
+      localCoveredBranches[10] = true;
       if (other.surname != null) {
+        localCoveredBranches[11] = true;
         return false;
       }
     } else if (!surname.equals(other.surname)) {
+      localCoveredBranches[12] = true;
       return false;
     }
+    localCoveredBranches[13] = true;
+    
+    //for tracking of individual test cases coverage
+    //System.out.println(Arrays.toString(localCoveredBranches));
     return true;
   }
 

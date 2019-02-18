@@ -23,11 +23,19 @@
 package com.iluwatar.builder;
 
 /**
- * 
+ *
  * Hero, the class with many parameters.
- * 
+ *
  */
 public final class Hero {
+  public static boolean[] coverage = new boolean[13];
+  public static boolean[] totalCoverage = new boolean[13];
+  public static final String[] CONDS = {"hairColor != null",
+      "hairColor == null", "hairType != null","hairType == null",
+      "hairColor != null && hairType != null",
+      "hairColor == null && hairType == null", "hairType != HairType.BALD",
+      "hairType == HairType.BALD", "armor != null", "armor == null",
+      "weapon != null", "weapon == null", "default"};
 
   private final Profession profession;
   private final String name;
@@ -78,6 +86,19 @@ public final class Hero {
             .append(" named ")
             .append(name);
     if (hairColor != null || hairType != null) {
+      if (hairColor != null) {
+        coverage[0] = true;
+      } else {
+        coverage[1] = true;
+      }
+      if (hairType != null) {
+        coverage[2] = true;
+      } else {
+        coverage[3] = true;
+      }
+      if (hairColor != null && hairType != null) {
+        coverage[4] = true;
+      }
       sb.append(" with ");
       if (hairColor != null) {
         sb.append(hairColor).append(' ');
@@ -85,22 +106,36 @@ public final class Hero {
       if (hairType != null) {
         sb.append(hairType).append(' ');
       }
+      if (hairType != HairType.BALD) {
+        coverage[5] = true;
+      } else {
+        coverage[6] = true;
+      }
       sb.append(hairType != HairType.BALD ? "hair" : "head");
+    } else {
+      coverage[7] = true;
     }
     if (armor != null) {
       sb.append(" wearing ").append(armor);
+      coverage[8] = true;
+    } else {
+      coverage[9] = true;
     }
     if (weapon != null) {
       sb.append(" and wielding a ").append(weapon);
+      coverage[10] = true;
+    } else {
+      coverage[11] = true;
     }
     sb.append('.');
+    coverage[12] = true; //Default
     return sb.toString();
   }
 
   /**
-   * 
+   *
    * The builder class.
-   * 
+   *
    */
   public static class Builder {
 

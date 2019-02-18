@@ -50,6 +50,19 @@ import java.util.Scanner;
  *
  */
 public class App {
+  public static boolean[] coverage;
+  public static boolean[] totalCoverage;
+  public static final String[] INTERACTIVEMODE_CONDS = {"option != 4",
+      "option == 1", "eventType.equalsIgnoreCase(\"A\")",
+      "catch (MaxNumOfEventsAllowedException | LongRunningEventException | EventDoesNotExistException e)",
+      "eventType.equalsIgnoreCase(\"S\")",
+      "catch (MaxNumOfEventsAllowedException | InvalidOperationException | "
+          + "LongRunningEventException | EventDoesNotExistException e)",
+      "option == 2", "option == 2 && catch (EventDoesNotExistException e)",
+      "option == 3", "eggChoice.equalsIgnoreCase(\"O\")",
+      "option == 3 && catch (EventDoesNotExistException e)",
+      "eggChoice.equalsIgnoreCase(\"A\")",
+      "option == 4", "default"};
 
   private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
@@ -144,67 +157,80 @@ public class App {
     Scanner s = new Scanner(System.in);
     int option = -1;
     while (option != 4) {
+      coverage[0] = true;
       LOGGER.info("Hello. Would you like to boil some eggs?");
       LOGGER.info("(1) BOIL AN EGG \n(2) STOP BOILING THIS EGG \n(3) HOW ARE MY EGGS? \n(4) EXIT");
       LOGGER.info("Choose [1,2,3,4]: ");
       option = s.nextInt();
 
       if (option == 1) {
+        coverage[1] = true;
         s.nextLine();
         LOGGER.info("Boil multiple eggs at once (A) or boil them one-by-one (S)?: ");
         String eventType = s.nextLine();
         LOGGER.info("How long should this egg be boiled for (in seconds)?: ");
         int eventTime = s.nextInt();
         if (eventType.equalsIgnoreCase("A")) {
+          coverage[2] = true;
           try {
             int eventId = eventManager.createAsync(eventTime);
             eventManager.start(eventId);
             LOGGER.info("Egg [{}] is being boiled.", eventId);
           } catch (MaxNumOfEventsAllowedException | LongRunningEventException | EventDoesNotExistException e) {
+            coverage[3] = true;
             LOGGER.error(e.getMessage());
           }
         } else if (eventType.equalsIgnoreCase("S")) {
+          coverage[4] = true;
           try {
             int eventId = eventManager.create(eventTime);
             eventManager.start(eventId);
             LOGGER.info("Egg [{}] is being boiled.", eventId);
           } catch (MaxNumOfEventsAllowedException | InvalidOperationException | LongRunningEventException
               | EventDoesNotExistException e) {
+            coverage[5] = true;
             LOGGER.error(e.getMessage());
           }
         } else {
           LOGGER.info("Unknown event type.");
         }
       } else if (option == 2) {
+        coverage[6] = true;
         LOGGER.info("Which egg?: ");
         int eventId = s.nextInt();
         try {
           eventManager.cancel(eventId);
           LOGGER.info("Egg [{}] is removed from boiler.", eventId);
         } catch (EventDoesNotExistException e) {
+          coverage[7] = true;
           LOGGER.error(e.getMessage());
         }
       } else if (option == 3) {
+        coverage[8] = true;
         s.nextLine();
         LOGGER.info("Just one egg (O) OR all of them (A) ?: ");
         String eggChoice = s.nextLine();
 
         if (eggChoice.equalsIgnoreCase("O")) {
+          coverage[9] = true;
           LOGGER.info("Which egg?: ");
           int eventId = s.nextInt();
           try {
             eventManager.status(eventId);
           } catch (EventDoesNotExistException e) {
+            coverage[10] = true;
             LOGGER.error(e.getMessage());
           }
         } else if (eggChoice.equalsIgnoreCase("A")) {
+          coverage[11] = true;
           eventManager.statusOfAllEvents();
         }
       } else if (option == 4) {
+        coverage[12] = true;
         eventManager.shutdown();
       }
     }
-
+    coverage[13] = true; //default
     s.close();
   }
 

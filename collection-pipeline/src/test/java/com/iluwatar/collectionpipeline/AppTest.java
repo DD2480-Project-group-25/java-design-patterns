@@ -1,17 +1,17 @@
 /**
  * The MIT License
  * Copyright (c) 2014 Ilkka Seppälä
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,7 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -48,21 +49,68 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests that Collection Pipeline methods work as expected.
  */
 public class AppTest {
-  
+
   private List<Car> cars = CarFactory.createCars();
-  
+
+  @BeforeAll
+  public static void beforeAll() {
+    int branches = 12;
+    Car.visitedBranchGlobal = new boolean[branches];
+    Car.visitedBranchLocal = new boolean[branches];
+  }
+
+  @BeforeEach
+  public void beforeEach() {
+    Arrays.fill(Car.visitedBranchLocal, false);
+  }
+
+  /**
+   * Runs after each test. Adds newly covered branches to global coverage.
+   */
+  @AfterEach
+  public void afterEach() {
+    boolean verbose = false;
+
+    for (int i = 0; i < Car.visitedBranchLocal.length; i++) {
+      if (Car.visitedBranchLocal[i]) {
+        Car.visitedBranchGlobal[i] = true;
+      }
+    }
+    if (verbose) {
+      for (int i = 0; i < Car.visitedBranchLocal.length; i++) {
+        System.out.format("Branch %d covered: %b.\n", i, Car.visitedBranchLocal[i]);
+      }
+    }
+  }
+
+  /**
+   * Prints global test coverage for whole test suite.
+   */
+  @AfterAll
+  public static void afterAll() {
+    int cover = 0;
+    for (int i = 0; i < Car.visitedBranchGlobal.length; i++) {
+      System.out.format("Branch %d covered: %b.\n", i + 1, Car.visitedBranchGlobal[i]);
+      if (Car.visitedBranchGlobal[i]) {
+        cover++;
+      }
+    }
+    System.out.println("Test done, results:");
+    System.out.format("Branch cover is: %f.\n", (double) cover / Car.visitedBranchGlobal.length);
+  }
+
   @Test
   public void testGetModelsAfter2000UsingFor() {
     List<String> models = ImperativeProgramming.getModelsAfter2000(cars);
     assertEquals(Arrays.asList("Avenger", "Wrangler", "Focus", "Cascada"), models);
   }
-  
+
   @Test
   public void testGetModelsAfter2000UsingPipeline() {
     List<String> models = FunctionalProgramming.getModelsAfter2000(cars);
     assertEquals(Arrays.asList("Avenger", "Wrangler", "Focus", "Cascada"), models);
   }
-  
+
   @Test
   public void testGetGroupingOfCarsByCategory() {
     Map<Category, List<Car>> modelsExpected = new HashMap<>();
@@ -78,11 +126,11 @@ public class AppTest {
     assertEquals(modelsExpected, modelsFunctional);
     assertEquals(modelsExpected, modelsImperative);
   }
-  
+
   @Test
   public void testGetSedanCarsOwnedSortedByDate() {
     Person john = new Person(cars);
-    List<Car> modelsExpected = Arrays.asList(new Car("Dodge", "Avenger", 2010, Category.SEDAN), 
+    List<Car> modelsExpected = Arrays.asList(new Car("Dodge", "Avenger", 2010, Category.SEDAN),
         new Car("Ford", "Focus", 2012, Category.SEDAN));
     List<Car> modelsFunctional = FunctionalProgramming.getSedanCarsOwnedSortedByDate(Arrays.asList(john));
     List<Car> modelsImperative = ImperativeProgramming.getSedanCarsOwnedSortedByDate(Arrays.asList(john));
