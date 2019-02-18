@@ -27,14 +27,23 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 
  * Unit tests for {@link LotteryNumbers}
+ *
+ * Test class containing tests to increase the coverage
+ * of LotteryNumbers.equals method.
+ *
+ * Previously tested requirements of LotteryNumbers.equals() (Coverage 50%) :
+ * TBA
+ *
+ * Previously untested but now tested requirements of LotteryNumbers.equals() (Coverage 100%):
+ * - Compares identity
+ * - If the input object is Null
+ * - If the input object is not of class LotteryNumbers
+ * - Compares two LotteryNumbers (both positive and negative tests)
  *
  */
 class LotteryNumbersTest {
@@ -73,5 +82,58 @@ class LotteryNumbersTest {
     LotteryNumbers numbers3 = LotteryNumbers.create(
             new HashSet<>(Arrays.asList(11, 12, 13, 14)));
     assertNotEquals(numbers1, numbers3);
+  }
+
+  /**
+   * Test that equals() returns true when comparing the same object.
+   */
+  @Test
+  public void testEqualsSameObject() {
+    LotteryNumbers n =  LotteryNumbers.create(
+        new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    assertTrue(n.equals(n));
+  }
+  /**
+   * Test equals() where the input object is not of class LotteryNumbers.
+   */
+  @Test
+  public void testDifferentClass() {
+    LotteryNumbers n1 = LotteryNumbers.create(
+        new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    String n2 = "H";
+    assertFalse(n1.equals(n2));
+  }
+
+  /**
+   * Test equals() with a null object as input.
+   */
+  @Test
+  public void testEqualsNullObject() {
+    LotteryNumbers n1 = LotteryNumbers.createRandom();
+    LotteryNumbers n2 = null;
+    assertFalse(n1.equals(n2));
+  }
+
+  /**
+   * Test equals() two LotteryNumbers have different numbers.
+   */
+  @Test
+  public void testDifferentNumbers() {
+    LotteryNumbers n1 = LotteryNumbers.create(
+        new HashSet<>(Arrays.asList(2, 2, 2, 2)));
+    LotteryNumbers n2 = LotteryNumbers.create(
+        new HashSet<>(Arrays.asList(1, 2, 3, 4)));
+    assertFalse(n1.equals(n2));
+  }
+  /**
+   * Test equals() two LotteryNumbers have the same numbers.
+   */
+  @Test
+  public void testSameNumbers() {
+    LotteryNumbers n1 = LotteryNumbers.create(
+        new HashSet<>(Arrays.asList(2, 2, 2, 2)));
+    LotteryNumbers n2 = LotteryNumbers.create(
+        new HashSet<>(Arrays.asList(2, 2, 2, 2)));
+    assertTrue(n1.equals(n2));
   }
 }
