@@ -32,8 +32,8 @@ public class PlayerDetails {
   private final String emailAddress;
   private final String bankAccountNumber;
   private final String phoneNumber;
-  public static boolean[] visitedBranchGlobal;
-  public static boolean[] visitedBranchLocal;
+  public static boolean[] visitedBranchGlobal = new boolean[13];
+  public static boolean[] visitedBranchLocal = new boolean[13];
 
 
   /**
