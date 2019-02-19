@@ -1,3 +1,28 @@
+# Special assingment heading
+## Branches of interest
+* tests - contains added tests
+* coverage - contains our ad hoc coverage tool
+* combination - contains a combination of both above
+* refactoring - contains our two refactored methods
+
+## Coverage & Tests implemented for:
+- Person::equals (**Serverless**)
+- Hero::toString (**Builder**)
+- LambdaInfo::equals (**Serverless**)
+- QuadTree::insert (**spatial-partition**)
+- Person::equals (**repository**)
+- LotteryTicket::equals (**hexagonal**)
+- Address::equals (**serverless**)
+- Car::equals (**collection-pipeline**)
+- PlayerDetails::equals (**hexagonal**)
+
+## Coverage for:
+- App::runInteractiveMode (**event-asynchronous**)
+
+## Test for:
+- LotteryNumbers.equals (**hexagonal**)
+
+
 <!-- the line below needs to be an empty line C: (its because kramdown isnt
      that smart and dearly wants an empty line before a heading to be able to
      display it as such, e.g. website) -->
