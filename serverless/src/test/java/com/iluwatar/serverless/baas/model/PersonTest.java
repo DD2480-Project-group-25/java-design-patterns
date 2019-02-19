@@ -3,6 +3,8 @@ package com.iluwatar.serverless.baas.model;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
@@ -62,5 +64,11 @@ public class PersonTest {
     System.out.println("Covered " + df.format(((coveredConds + 1) / Person.totalCoverage.length) * 100)
         + "% of all conditions");
 
+  }
+
+  @Test
+  void dummy() {
+    Person p = new Person();
+    p.equals(p);
   }
 }

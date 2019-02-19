@@ -3,6 +3,7 @@ package com.iluwatar.serverless.faas;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -69,4 +70,11 @@ public class LambdaInfoTest {
     System.out.println();
 
   }
+
+  @Test
+  void dummy() {
+    LambdaInfo i = new LambdaInfo();
+    i.equals(i);
+  }
+
 }
