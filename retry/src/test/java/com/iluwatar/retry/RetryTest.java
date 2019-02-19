@@ -43,7 +43,9 @@ public class RetryTest {
   public void errors() {
     final BusinessException e = new BusinessException("unhandled");
     final Retry<String> retry = new Retry<>(
-        () -> { throw e; },
+        () -> {
+          throw e;
+        },
         2,
         0
     );
@@ -67,7 +69,9 @@ public class RetryTest {
   public void attempts() {
     final BusinessException e = new BusinessException("unhandled");
     final Retry<String> retry = new Retry<>(
-        () -> { throw e; },
+        () -> {
+          throw e;
+        },
         2,
         0
     );
@@ -91,7 +95,9 @@ public class RetryTest {
   public void ignore() throws Exception {
     final BusinessException e = new CustomerNotFoundException("customer not found");
     final Retry<String> retry = new Retry<>(
-        () -> { throw e; },
+        () -> {
+          throw e;
+        },
         2,
         0,
         ex -> CustomerNotFoundException.class.isAssignableFrom(ex.getClass())
