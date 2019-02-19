@@ -98,7 +98,7 @@ public class Address implements Serializable {
     localBranches[1] = true;
 
     if (o == null || getClass() != o.getClass()) {
-      if(o == null) {
+      if (o == null) {
         localBranches[3] = true;
       } else if (getClass() != o.getClass()) {
         localBranches[4] = true;
