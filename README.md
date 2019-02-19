@@ -5,7 +5,7 @@
 * combination - contains a combination of both above
 * refactoring - contains our two refactored methods
 
-## Coverage & Tests implemented for:
+## Coverage implemented for:
 - Person::equals (**Serverless**)
 - Hero::toString (**Builder**)
 - LambdaInfo::equals (**Serverless**)
@@ -15,12 +15,24 @@
 - Address::equals (**serverless**)
 - Car::equals (**collection-pipeline**)
 - PlayerDetails::equals (**hexagonal**)
-
-## Coverage for:
 - App::runInteractiveMode (**event-asynchronous**)
 
-## Test for:
+## Tests implemented for:
+- Person::equals (**Serverless**)
+- Hero::toString (**Builder**)
+- LambdaInfo::equals (**Serverless**)
+- QuadTree::insert (**spatial-partition**)
+- Person::equals (**repository**)
+- LotteryTicket::equals (**hexagonal**)
+- Address::equals (**serverless**)
+- Car::equals (**collection-pipeline**)
+- PlayerDetails::equals (**hexagonal**)
 - LotteryNumbers.equals (**hexagonal**)
+
+## Refactoring for:
+- LambdaInfo::equals (**Serverless**)
+- App::runInteractiveMode (**event-asynchronous**)
+
 
 
 <!-- the line below needs to be an empty line C: (its because kramdown isnt
