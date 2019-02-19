@@ -19,7 +19,7 @@ public class AddressTest {
 
   private static void printInformation(String context, boolean[] coverage) {
     int covered = 0;
-    for(boolean branch : coverage) {
+    for (boolean branch : coverage) {
       covered += branch ? 1 : 0;
     }
     int total = coverage.length;
